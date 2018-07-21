@@ -1,0 +1,20 @@
+{
+	"schema": {
+		"fields": [
+			{
+				"name": "address",
+				"type": "record",
+				"fields":[
+					{
+						"name": "street_address",
+						"type": "string"
+					},
+					{
+						"name": "country",
+						"type": "string"
+					}
+				]
+			}
+		]
+	}
+}
