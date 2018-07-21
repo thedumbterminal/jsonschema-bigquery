@@ -7,7 +7,7 @@ Convert JSON schema to Google BigQuery schema
 
 ## Install
 
-    npm install jsonschema-avro
+    npm install jsonschema-bigquery
 
 ## Consume
 
