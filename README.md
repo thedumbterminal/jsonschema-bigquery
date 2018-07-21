@@ -27,7 +27,7 @@ Convert JSON schema to Google BigQuery schema
     	}
     }
     
-    const avro = jsonSchemaBigquery.convert(inJson)
+    const bigquery = jsonSchemaBigquery.convert(inJson)
 
 Please ensure that the input JSON schema is dereferenced so that all external references have been resolved. [json-schema-ref-parser](https://www.npmjs.com/package/json-schema-ref-parser) can do this, prior to using this module.
 
