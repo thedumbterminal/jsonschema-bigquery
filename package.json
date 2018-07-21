@@ -1,0 +1,32 @@
+{
+  "name": "jsonschema-bigquery",
+  "version": "0.0.1",
+  "description": "Convert JSON schema to Google BigQuery schema",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thedumbterminal/jsonschema-bigquery.git"
+  },
+  "keywords": [
+    "json",
+    "schema",
+    "google",
+    "bigquery"
+  ],
+  "author": {
+    "name": "thedumbterminal",
+    "email": "github@thedumbterminal.co.uk",
+    "url": "http://www.thedumbterminal.co.uk"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thedumbterminal/jsonschema-bigquery/issues"
+  },
+  "homepage": "https://github.com/thedumbterminal/jsonschema-bigquery#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
