@@ -19,7 +19,7 @@ describe('index', () => {
 					result = jsonSchemaBigquery.convert(inJson)
 				})
 
-				it('converts to avro', () => {
+				it('converts to big query', () => {
 					//console.log(JSON.stringify(result, null, 2))
 					assert.deepEqual(result, expected)
 				})
