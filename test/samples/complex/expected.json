@@ -3,15 +3,17 @@
 		"fields": [
 			{
 				"name": "address",
-				"type": "record",
+				"type": "RECORD",
 				"fields":[
 					{
 						"name": "street_address",
-						"type": "string"
+						"type": "STRING",
+						"mode": "NULLABLE"
 					},
 					{
 						"name": "country",
-						"type": "string"
+						"type": "STRING",
+						"mode": "NULLABLE"
 					}
 				]
 			}

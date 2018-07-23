@@ -37,9 +37,10 @@ Please ensure that the input JSON schema is dereferenced so that all external re
 
 ## TODO
 
-* Repeated fields
-* Enums
-* Nullable fields
-* Error messages
-* Descriptions
+* Repeated fields.
+* Enums.
+* Error messages.
+* Descriptions.
 * Handle `oneOf`, `anyOf` and `allOf`.
+* Fields with multiple types.
+

@@ -1,0 +1,18 @@
+{
+	"id": "http://yourdomain.com/schemas/myschema.json",
+	"description": "Example description",
+	"type": "object",
+	"properties": {
+		"first_name": {
+			"description": "the first name",
+			"type": "string"
+		},
+		"last_name": {
+			"description": "the last name",
+			"type": "string"
+		}
+	},
+	"required": [
+		"first_name"
+	]
+}
