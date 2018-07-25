@@ -4,13 +4,8 @@
 	"type": "object",
 	"properties": {
 		"first_name": {
-			"type": "string"
-		},
-		"last_name": {
+			"description": "the first name",
 			"type": "string"
 		}
-	},
-	"required": [
-		"first_name"
-	]
+	}
 }

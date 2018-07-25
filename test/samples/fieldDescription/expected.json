@@ -1,0 +1,12 @@
+{
+	"schema": {
+		"fields": [
+			{
+				"description": "the first name",
+				"name": "first_name",
+				"type": "STRING",
+				"mode": "NULLABLE"
+			}
+		]
+	}
+}
