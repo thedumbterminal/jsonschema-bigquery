@@ -40,11 +40,15 @@ jsonSchemaBigquery._getMode = (required, name, item) => {
 }
 
 jsonSchemaBigquery._convertProperty = (name, value, mode) => {
-	return {
+	let field = {
 		name: name,
 		type: jsonSchemaBigquery._getType(value.type),
 		mode: mode
 	}
+	if(value.description){
+		field.description = value.description
+	}
+	return field
 }
 
 jsonSchemaBigquery._getType = (types) => {

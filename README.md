@@ -40,7 +40,6 @@ Please ensure that the input JSON schema is dereferenced so that all external re
 * Repeated fields.
 * Enums.
 * Error messages.
-* Descriptions.
 * Handle `oneOf`, `anyOf` and `allOf`.
 * Fields with multiple types.
 
