@@ -27,21 +27,35 @@ jsonSchemaBigquery._convertProperties = (schema, required = []) => {
 		if(jsonSchemaBigquery._isComplex(schema[item])){
 			return jsonSchemaBigquery._convertComplexProperty(item, schema[item])
 		}
-		const initialMode = jsonSchemaBigquery._initialMode(required, item)
-		return jsonSchemaBigquery._convertProperty(item, schema[item], initialMode)
+		const mode = jsonSchemaBigquery._getMode(required, item, schema[item])
+		return jsonSchemaBigquery._convertProperty(item, schema[item], mode)
 	})
 }
 
-jsonSchemaBigquery._initialMode = (required, field) => {
-	return required.includes(field) ? 'REQUIRED' : 'NULLABLE'
+jsonSchemaBigquery._getMode = (required, name, item) => {
+	if(Array.isArray(item.type) && item.type.includes('null')){
+		return 'NULLABLE'
+	}
+	return required.includes(name) ? 'REQUIRED' : 'NULLABLE'
 }
 
 jsonSchemaBigquery._convertProperty = (name, value, mode) => {
 	return {
 		name: name,
-		type: typeMapping[value.type],
+		type: jsonSchemaBigquery._getType(value.type),
 		mode: mode
 	}
+}
+
+jsonSchemaBigquery._getType = (types) => {
+	if(!Array.isArray(types)){
+		return typeMapping[types]
+	}
+	const notNullTypes = types.filter(item => item !== 'null')
+	if(notNullTypes.length > 1){
+		throw new Error('Multiple types are not allowed')
+	}
+	return typeMapping[notNullTypes[0]]
 }
 
 jsonSchemaBigquery._convertComplexProperty = (name, contents) => {
