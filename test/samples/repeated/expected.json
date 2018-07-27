@@ -1,0 +1,11 @@
+{
+	"schema": {
+		"fields": [
+			{
+				"name": "names",
+				"type": "STRING",
+				"mode": "REPEATED"
+			}
+		]
+	}
+}

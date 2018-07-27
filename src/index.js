@@ -21,12 +21,16 @@ jsonSchemaBigquery.convert = (jsonSchema) => {
 	}
 }
 
-jsonSchemaBigquery._isComplex = (schema) => schema.type === 'object'
+jsonSchemaBigquery._isNested = (schema) => schema.type === 'object'
+jsonSchemaBigquery._isRepeated = (schema) => schema.type === 'array'
 
 jsonSchemaBigquery._convertProperties = (schema, required = []) => {
 	return Object.keys(schema).map((item) => {
-		if(jsonSchemaBigquery._isComplex(schema[item])){
-			return jsonSchemaBigquery._convertComplexProperty(item, schema[item])
+		if(jsonSchemaBigquery._isNested(schema[item])){
+			return jsonSchemaBigquery._convertNestedProperty(item, schema[item])
+		}
+		else if(jsonSchemaBigquery._isRepeated(schema[item])){
+			return jsonSchemaBigquery._convertRepeatedProperty(item, schema[item])
 		}
 		const mode = jsonSchemaBigquery._getMode(required, item, schema[item])
 		return jsonSchemaBigquery._convertProperty(item, schema[item], mode)
@@ -63,10 +67,24 @@ jsonSchemaBigquery._getType = (types) => {
 	return typeMapping[notNullTypes[0]]
 }
 
-jsonSchemaBigquery._convertComplexProperty = (name, contents) => {
-	return {
+jsonSchemaBigquery._convertNestedProperty = (name, contents, mode) => {
+	let field = {
 		name: name,
 		type: jsonSchemaBigquery._getType(contents.type),
 		fields: jsonSchemaBigquery._convertProperties(contents.properties)
 	}
+	if(mode){
+		field.mode = mode
+	}
+	if(contents.description){
+		field.description = contents.description
+	}
+	return field
+}
+
+jsonSchemaBigquery._convertRepeatedProperty = (name, contents) => {
+	if(jsonSchemaBigquery._isNested(contents.items)){
+		return jsonSchemaBigquery._convertNestedProperty(name, contents.items, 'REPEATED')
+	}
+	return jsonSchemaBigquery._convertProperty(name, contents.items, 'REPEATED')
 }
