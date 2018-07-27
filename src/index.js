@@ -30,7 +30,6 @@ jsonSchemaBigquery._convertProperties = (schema, required = []) => {
 			return jsonSchemaBigquery._convertNestedProperty(item, schema[item])
 		}
 		else if(jsonSchemaBigquery._isRepeated(schema[item])){
-			console.log('found repeated field')
 			return jsonSchemaBigquery._convertRepeatedProperty(item, schema[item])
 		}
 		const mode = jsonSchemaBigquery._getMode(required, item, schema[item])
