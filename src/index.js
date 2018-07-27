@@ -6,7 +6,8 @@ const typeMapping = {
 	'boolean': 'BOOLEAN',
 	'date-time': 'TIMESTAMP',
 	'integer': 'INTEGER',
-	'number': 'FLOAT'
+	'number': 'FLOAT',
+	'object': 'RECORD'
 }
 
 jsonSchemaBigquery.convert = (jsonSchema) => {
@@ -65,7 +66,7 @@ jsonSchemaBigquery._getType = (types) => {
 jsonSchemaBigquery._convertComplexProperty = (name, contents) => {
 	return {
 		name: name,
-		type: 'RECORD',
+		type: jsonSchemaBigquery._getType(contents.type),
 		fields: jsonSchemaBigquery._convertProperties(contents.properties)
 	}
 }
