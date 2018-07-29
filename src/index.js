@@ -47,7 +47,7 @@ jsonSchemaBigquery._getMode = (required, name, item) => {
 jsonSchemaBigquery._convertProperty = (name, value, mode) => {
 	let field = {
 		name: name,
-		type: jsonSchemaBigquery._getType(value.type),
+		type: jsonSchemaBigquery._getType(value),
 		mode: mode
 	}
 	if(value.description){
@@ -56,21 +56,28 @@ jsonSchemaBigquery._convertProperty = (name, value, mode) => {
 	return field
 }
 
-jsonSchemaBigquery._getType = (types) => {
-	if(!Array.isArray(types)){
-		return typeMapping[types]
+jsonSchemaBigquery._getType = (field) => {
+	let type
+	if(Array.isArray(field.type)){
+		const notNullTypes = field.type.filter(item => item !== 'null')
+		if(notNullTypes.length > 1){
+			throw new Error('Multiple types are not allowed')
+		}
+		type = notNullTypes[0]
 	}
-	const notNullTypes = types.filter(item => item !== 'null')
-	if(notNullTypes.length > 1){
-		throw new Error('Multiple types are not allowed')
+	else {
+		type = field.type
 	}
-	return typeMapping[notNullTypes[0]]
+	if(field.format == 'date-time'){
+		type = field.format
+	}
+	return typeMapping[type]
 }
 
 jsonSchemaBigquery._convertNestedProperty = (name, contents, mode) => {
 	let field = {
 		name: name,
-		type: jsonSchemaBigquery._getType(contents.type),
+		type: jsonSchemaBigquery._getType(contents),
 		fields: jsonSchemaBigquery._convertProperties(contents.properties)
 	}
 	if(mode){
