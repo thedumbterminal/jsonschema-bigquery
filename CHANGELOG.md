@@ -1,6 +1,10 @@
 # Changelog
 
-## v0.0.4 (29/07/2018)
+## v0.0.5 (29/07/2018)
+
+* Supports timestamp fields.
+
+## v0.0.4 (27/07/2018)
 
 * Supports repeated fields.
 

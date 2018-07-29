@@ -37,7 +37,6 @@ Please ensure that the input JSON schema is dereferenced so that all external re
 
 ## TODO
 
-* Enums.
 * Error messages.
 * Handle `oneOf`, `anyOf` and `allOf`.
-
+* Support timestamp columns
