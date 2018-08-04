@@ -1,3 +1,5 @@
+const merger = require('./merger')
+
 const jsonSchemaBigquery = module.exports = {}
 
 //Json schema on the left, bigquery on the right
@@ -23,17 +25,22 @@ jsonSchemaBigquery.convert = (jsonSchema) => {
 
 jsonSchemaBigquery._isNested = (schema) => schema.type === 'object'
 jsonSchemaBigquery._isRepeated = (schema) => schema.type === 'array'
+jsonSchemaBigquery._isCombined = (schema) => Boolean(schema.allOf)
 
 jsonSchemaBigquery._convertProperties = (schema, required = []) => {
 	return Object.keys(schema).map((item) => {
-		if(jsonSchemaBigquery._isNested(schema[item])){
-			return jsonSchemaBigquery._convertNestedProperty(item, schema[item])
+		let property = schema[item]
+		if(jsonSchemaBigquery._isCombined(schema[item])){
+			property = merger.merge(schema[item])
 		}
-		else if(jsonSchemaBigquery._isRepeated(schema[item])){
-			return jsonSchemaBigquery._convertRepeatedProperty(item, schema[item])
+		if(jsonSchemaBigquery._isNested(property)){
+			return jsonSchemaBigquery._convertNestedProperty(item, property)
 		}
-		const mode = jsonSchemaBigquery._getMode(required, item, schema[item])
-		return jsonSchemaBigquery._convertProperty(item, schema[item], mode)
+		else if(jsonSchemaBigquery._isRepeated(property)){
+			return jsonSchemaBigquery._convertRepeatedProperty(item, property)
+		}
+		const mode = jsonSchemaBigquery._getMode(required, item, property)
+		return jsonSchemaBigquery._convertProperty(item, property, mode)
 	})
 }
 
