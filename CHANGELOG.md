@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.6 (11/08/2018)
+
+* Supports `allOf`, `anyOf` and `oneOf` combined schemas.
+
 ## v0.0.5 (29/07/2018)
 
 * Supports timestamp fields.
