@@ -1,6 +1,6 @@
 {
   "name": "jsonschema-bigquery",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Convert JSON schema to Google BigQuery schema",
   "main": "src/index.js",
   "scripts": {
@@ -28,5 +28,7 @@
   "homepage": "https://github.com/thedumbterminal/jsonschema-bigquery#readme",
   "devDependencies": {
     "mocha": "^5.2.0"
+  },
+  "dependencies": {
   }
 }

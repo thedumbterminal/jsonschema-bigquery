@@ -1,0 +1,43 @@
+{
+	"id": "http://yourdomain.com/schemas/myschema.json",
+	"description": "Example description",
+	"type": "object",
+	"properties": {
+		"addresses": {
+			"allOf": [
+				{
+					"type": "object",
+					"properties": {
+						"address": {
+							"type": "object",
+							"properties": {
+								"street_address": {
+									"type": "string"
+								},
+								"country": {
+									"type" : "string"
+								}
+							}
+						}
+					}
+				},
+				{
+					"type": "object",
+					"properties": {
+						"address": {
+							"type": "object",
+							"properties": {
+								"town": {
+									"type": "string"
+								},
+								"country": {
+									"type" : "string"
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+}
