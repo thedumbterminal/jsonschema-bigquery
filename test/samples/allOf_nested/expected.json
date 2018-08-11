@@ -1,0 +1,33 @@
+{
+	"schema": {
+		"fields": [
+			{
+				"name": "addresses",
+				"type": "RECORD",
+				"fields": [
+					{
+						"name": "address",
+						"type": "RECORD",
+						"fields": [
+							{
+								"name": "street_address",
+								"type": "STRING",
+								"mode": "NULLABLE"
+							},
+							{
+								"name": "country",
+								"type": "STRING",
+								"mode": "NULLABLE"
+							},
+							{
+								"name": "town",
+								"type": "STRING",
+								"mode": "NULLABLE"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

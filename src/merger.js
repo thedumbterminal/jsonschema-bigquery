@@ -1,17 +1,30 @@
-const _ = require('lodash');
 const merger = module.exports = {}
 
 merger.merge = (schema) => {
-	let combined = {}
-	schema.allOf.forEach((item) => {
-		combined = _.assignWith(combined, item, merger._mergeProperties)
-	})
-	return combined
+	return ['allOf', 'anyOf', 'oneOf'].reduce((merged, key) => {
+		if(!schema[key]){
+			return merged
+		}
+		return schema[key].reduce((acc, item) => merger._mergeItem(acc, item), merged)
+	}, {})
 }
 
-merger._mergeProperties = (dst, src) => {
-	if(typeof dst === 'object' && typeof src === 'object'){
-		return Object.assign({}, dst, src)
-	}
-	return undefined
+merger._mergeItem = (dst, src) => {
+	Object.entries(src).forEach((entry) => {
+		if(typeof dst[entry[0]] === 'undefined'){
+			dst[entry[0]] = entry[1]
+			return
+		}
+
+		if(dst[entry[0]] === src[entry[0]]){
+			return
+		}
+
+		if(typeof entry[1] === 'object'){
+			return merger._mergeItem(dst[entry[0]], entry[1])
+		}
+
+		throw new Error(`Incompatible field: ${entry[0]}`)
+	})
+	return dst
 }

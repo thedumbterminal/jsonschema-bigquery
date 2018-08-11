@@ -25,7 +25,7 @@ jsonSchemaBigquery.convert = (jsonSchema) => {
 
 jsonSchemaBigquery._isNested = (schema) => schema.type === 'object'
 jsonSchemaBigquery._isRepeated = (schema) => schema.type === 'array'
-jsonSchemaBigquery._isCombined = (schema) => Boolean(schema.allOf)
+jsonSchemaBigquery._isCombined = (schema) => Boolean(schema.allOf || schema.anyOf || schema.oneOf)
 
 jsonSchemaBigquery._convertProperties = (schema, required = []) => {
 	return Object.keys(schema).map((item) => {
