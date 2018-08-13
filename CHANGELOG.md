@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.7 (13/08/2018)
+
+* Support fields with nullable types using `anyOf` method.
+
 ## v0.0.6 (11/08/2018)
 
 * Supports `allOf`, `anyOf` and `oneOf` combined schemas.
