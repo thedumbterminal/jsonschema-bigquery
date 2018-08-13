@@ -24,6 +24,15 @@ merger._mergeItem = (dst, src) => {
 			return merger._mergeItem(dst[entry[0]], entry[1])
 		}
 
+		//Convert type to an array if needed
+		if(entry[0] === 'type'){
+			const types = new Set([dst[entry[0]], entry[1]])
+			if(types.size > 1){
+				dst[entry[0]] = Array.from(types)
+			}
+			return
+		}
+
 		throw new Error(`Incompatible field: ${entry[0]}`)
 	})
 	return dst
