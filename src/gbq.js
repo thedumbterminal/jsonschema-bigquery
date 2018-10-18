@@ -1,5 +1,7 @@
 const gbq = module.exports = {}
 
+const logger = require('log-driver').logger
+
 const BigQuery = require('@google-cloud/bigquery')
 
 gbq.createTable = async (projectId, datasetId, tableId, schema) => {
@@ -9,7 +11,7 @@ gbq.createTable = async (projectId, datasetId, tableId, schema) => {
     .dataset(datasetId)
     .createTable(tableId, schema)
 
-  console.log(`Table ${table.id} created.`)
+  logger.info(`Table ${table.id} created.`)
 }
 
 gbq.patchTable = async (projectId, datasetId, tableId, schema) => {
@@ -20,8 +22,7 @@ gbq.patchTable = async (projectId, datasetId, tableId, schema) => {
     .table(tableId)
     .setMetadata(schema)
 
-  console.log(res)
-}
+  logger.info( 'Patch result is '  + JSON.stringify(res)) }
 
 gbq.tableExists = async (projectId, datasetId, tableId) => {
   const bigquery = new BigQuery({ projectId })
@@ -29,6 +30,7 @@ gbq.tableExists = async (projectId, datasetId, tableId) => {
   const table = await bigquery
     .dataset(datasetId)
     .table(tableId)
-
-  return table.exists()
+  const res = await table.exists()
+  logger.debug('Table check is ' + JSON.stringify(res))
+  return res[0]
 }

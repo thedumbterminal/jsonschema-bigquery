@@ -1,6 +1,8 @@
-const merger = require('./merger')
-
 const jsonSchemaBigquery = module.exports = {}
+
+const merger = require('./merger')
+const logger = require('log-driver').logger
+
 
 // Json schema on the left, bigquery on the right
 const typeMapping = {
@@ -13,29 +15,43 @@ const typeMapping = {
 }
 
 jsonSchemaBigquery.convert = (jsonSchema) => {
+  logger.debug('Entering convert()')
   if (!jsonSchema) {
     throw new Error('No schema given')
   }
-  return {
+
+  const fields = jsonSchema.allOf.reduce( (fields, entry) => {
+     logger.debug('Entry is ' + JSON.stringify(entry))
+     const res = jsonSchemaBigquery._convertProperties(entry.properties, entry.required)
+     logger.debug('Result is ' + JSON.stringify(res))
+     fields.push(...res)
+     return fields
+    },[])
+
+  return  {
     schema: {
-      fields: jsonSchemaBigquery._convertProperties(jsonSchema.properties, jsonSchema.required)
+      fields: fields
     }
   }
 }
 
 jsonSchemaBigquery._isNested = (schema) => schema.type === 'object'
-jsonSchemaBigquery._isRepeated = (schema) => schema.type === 'array'
+jsonSchemaBigquery._isRepeated = (schema) => schema.type === 'array' || (Array.isArray(schema.type) && schema.type.includes('array'))
 jsonSchemaBigquery._isCombined = (schema) => Boolean(schema.allOf || schema.anyOf || schema.oneOf)
 
 jsonSchemaBigquery._convertProperties = (schema, required = []) => {
   return Object.keys(schema).map((item) => {
     let property = schema[item]
+    logger.debug('Item is now: ' + item)
+    // Merge the properties together for subsequent processing
     if (jsonSchemaBigquery._isCombined(schema[item])) {
       property = merger.merge(schema[item])
+      logger.debug('Merged properties are ' + JSON.stringify(property))
     }
     if (jsonSchemaBigquery._isNested(property)) {
       return jsonSchemaBigquery._convertNestedProperty(item, property)
-    } else if (jsonSchemaBigquery._isRepeated(property)) {
+    } 
+    if (jsonSchemaBigquery._isRepeated(property)) {
       return jsonSchemaBigquery._convertRepeatedProperty(item, property)
     }
     const mode = jsonSchemaBigquery._getMode(required, item, property)

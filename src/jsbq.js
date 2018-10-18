@@ -3,32 +3,34 @@ const jsbq = module.exports = {}
 const jsonSchemaBigquery = require('./index')
 const gbq = require('./gbq')
 const util = require('./util')
+const logger = require('log-driver').logger
 
 jsbq.process = async (project, datasetName, jsonSchema) => {
-  console.log('Processing json schema...')
+  logger.info('Processing json schema...')
   const tableOptions = jsonSchemaBigquery.convert(jsonSchema)
-
-  console.log('Extracting table name from schema...')
+  logger.info(JSON.stringify(tableOptions))
+  
+  logger.info('Extracting table name from schema...')
   const tableName = util.get_table_id(jsonSchema.id)
-  console.log('Table name is: ' + tableName)
+  logger.info('Table name is ' + tableName)
 
-  console.log('Setting table options...')
+  logger.info('Setting table options...')
   tableOptions.friendly_name = jsonSchema.title
   tableOptions.description = jsonSchema.description || jsonSchema.title
   tableOptions.timePartitioning = {
     'type': 'DAY'
   }
 
-  console.log('Checking if table exists...')
+  logger.info('Checking if table exists...')
   const tableExists = await gbq.tableExists(project, datasetName, tableName)
   if (tableExists) {
-    console.log('Patching table ' + tableName)
+    logger.info('Patching table ' + tableName)
     await gbq.patchTable(project, datasetName, tableName, tableOptions)
   } else {
-    console.log('Creating table' + tableName)
+    logger.info('Creating table ' + tableName)
     await gbq.createTable(project, datasetName, tableName, tableOptions)
   }
-  console.log('Finished')
+  logger.info('Finished')
 }
 
 jsbq.run = async () => {
@@ -41,8 +43,9 @@ jsbq.run = async () => {
   .demandOption(['p', 'd', 'j'])
   .argv
 
-  const jsonSchema = await readFile(argv.j)
-  await jsbq.process(argv.p, argv.d, JSON.parse(jsonSchema.toString()))
+  const jsonSchema = require('./' + argv.j)
+  logger.debug('Schema is: ' + JSON.stringify(jsonSchema))
+  await jsbq.process(argv.p, argv.d, jsonSchema)
 }
 
 jsbq.run()
