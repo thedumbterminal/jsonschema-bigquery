@@ -1,27 +1,31 @@
 {
-	"id": "http://yourdomain.com/schemas/myschema.json",
-	"description": "Example description",
-	"type": "object",
-	"properties": {
-		"names": {
-			"allOf": [
-				{
-					"type": "object",
-					"properties": {
-						"first_name": {
-							"type": "string"
-						}
-					}
-				},
-				{
-					"type": "object",
-					"properties": {
-						"last_name": {
-							"type": "string"
-						}
-					}
-				}
-			]
-		}
-	}
+    "id": "http://yourdomain.com/schemas/myschema.json",
+    "description": "Example description",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "names": {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "first_name": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "last_name": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ]
 }

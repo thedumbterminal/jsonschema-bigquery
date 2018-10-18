@@ -1,13 +1,17 @@
 {
-	"id": "http://yourdomain.com/schemas/myschema.json",
-	"description": "Example description",
-	"type": "object",
-	"properties": {
-		"names": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		}
-	}
+    "id": "http://yourdomain.com/schemas/myschema.json",
+    "description": "Example description",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "names": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
 }
