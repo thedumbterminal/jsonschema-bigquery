@@ -1,15 +1,11 @@
 {
-    "id": "http://yourdomain.com/schemas/myschema.json",
-    "description": "Example description",
-    "allOf": [
-        {
-            "type": "object",
-            "properties": {
-                "modified": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            }
-        }
-    ]
+	"id": "http://yourdomain.com/schemas/myschema.json",
+	"description": "Example description",
+	"type": "object",
+	"properties": {
+		"modified": {
+			"type": "string",
+			"format": "date-time"
+		}
+	}
 }

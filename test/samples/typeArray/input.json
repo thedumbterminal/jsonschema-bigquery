@@ -1,26 +1,22 @@
 {
-    "id": "http://yourdomain.com/schemas/myschema.json",
-    "description": "Example description",
-    "allOf": [
-        {
-            "type": "object",
-            "properties": {
-                "first_name": {
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "last_name": {
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                }
-            },
-            "required": [
-                "first_name"
-            ]
-        }
-    ]
+	"id": "http://yourdomain.com/schemas/myschema.json",
+	"description": "Example description",
+	"type": "object",
+	"properties": {
+		"first_name": {
+			"type": [
+				"string",
+				"null"
+			]
+		},
+		"last_name": {
+			"type": [
+				"string",
+				"null"
+			]
+		}
+	},
+	"required": [
+		"first_name"
+	]
 }
