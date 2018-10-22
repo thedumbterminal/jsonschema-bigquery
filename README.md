@@ -27,6 +27,8 @@ Please ensure that the input JSON schema is dereferenced so that all external re
 ## Test
 
     npm test
+    
+    A standalone test script is also included that supports batch creation of tables in a nominated test dataset
 
 ## TODO
 

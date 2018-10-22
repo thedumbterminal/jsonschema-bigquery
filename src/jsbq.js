@@ -1,6 +1,5 @@
 const jsbq = module.exports = {}
 
-const jsonSchemaBigquery = require('./index')
 const gbq = require('./gbq')
 const util = require('./util')
 const converter = require('./converter')
