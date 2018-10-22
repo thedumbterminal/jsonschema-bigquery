@@ -1,4 +1,4 @@
-const jsonSchemaBigquery = require('../src/index')
+const converter = require('../src/converter')
 const assert = require('assert')
 const fs = require('fs')
 
@@ -14,11 +14,13 @@ describe('index', () => {
         let result
 
         before(() => {
-          result = jsonSchemaBigquery.convert(inJson)
+          result = converter.run(inJson,'p','t')
         })
 
         it('converts to big query', () => {
-          // console.log(JSON.stringify(result, null, 2))
+          if ( dir === 'oneof' ) {
+            console.log(JSON.stringify(result, null, 2))
+          }
           assert.deepStrictEqual(result, expected)
         })
       })

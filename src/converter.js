@@ -102,11 +102,17 @@ function merge_dicts(merge_type, dest_dict, source_dict){ //Merges a single obje
 
 function scalar(name, type_, mode, description){
     const bigquery_type = JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT[type_]
-    return { 'name': name,
+    
+    const result = { 'name': name,
              'type': bigquery_type,
-             'mode': mode,
-             'description': description
+             'mode': mode
     }
+
+    if (description) {
+      result.description = description
+    }
+
+    return result
 }
 
 function array(name, node, mode){
@@ -126,12 +132,16 @@ function object_(name, node, mode){
         return visit(key,properties[key], required)
     })
 
-    return { 'name': name,
+    const result =  { 'name': name,
              'type': 'RECORD',
              'mode': mode,
-             'description': node['description'],
              'fields': fields
     }
+    
+    if ( node['decription'] )
+      result.description = node['description']
+    
+    return result
 }
 
 function simple(name, type_, node, mode){
