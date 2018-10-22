@@ -2,7 +2,7 @@
   "name": "jsonschema-bigquery",
   "version": "0.0.7",
   "description": "Convert JSON schema to Google BigQuery schema",
-  "main": "src/index.js",
+  "main": "src/converter.js",
   "scripts": {
     "test": "mocha test",
     "lint": "eslint ."

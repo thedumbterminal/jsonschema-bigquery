@@ -1,6 +1,7 @@
-PROJECT=hx-trial
-DATASET=michael__smith__user2
-SCHEMA_PATH=~/tmp/data-platform-message-schemas/dist/dereferenced/events/
+#Environment dependencies 
+#PROJECT=
+#DATASET=
+#SCHEMA_PATH=???/dist/dereferenced/events/
 
 for EVENT_VERSION in `cat events.list`
 do

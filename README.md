@@ -21,6 +21,10 @@ Note that some features involve bespoke interpretation of schema details suited 
 ## Consume
 
     node jsbq.js -p <gbq project> -d <gbq dataset> -j <json schema file>
+    
+    For embedded usage the following will allow and support runtime schema conversion and table maintenance:
+
+    const jsonSchemaBigquery = require('jsonschema-bigquery')
 
 Please ensure that the input JSON schema is dereferenced so that all external references have been resolved. [json-schema-ref-parser](https://www.npmjs.com/package/json-schema-ref-parser) can do this, prior to using this module.
 

@@ -1,5 +1,6 @@
-SOURCE_DATASET=hx-trial:michael__smith__user2
-TARGET_DATASET=hx-data-production:collector__streaming
+#Environment dependencies
+#SOURCE_DATASET=
+#TARGET_DATASET=
 
 for TABLE in `bq ls $SOURCE_DATASET | tail +3 | cut -c 1-35| sed 's; ;;g'`
 do
