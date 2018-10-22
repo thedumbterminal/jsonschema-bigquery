@@ -3,11 +3,13 @@ const jsbq = module.exports = {}
 const jsonSchemaBigquery = require('./index')
 const gbq = require('./gbq')
 const util = require('./util')
+const converter = require('./converter')
 const logger = require('log-driver').logger
 
 jsbq.process = async (project, datasetName, jsonSchema) => {
   logger.info('Processing json schema...')
-  const tableOptions = jsonSchemaBigquery.convert(jsonSchema)
+//  const tableOptions = jsonSchemaBigquery.convert(jsonSchema)
+  const tableOptions = converter.run(jsonSchema,'p','t')
   logger.info(JSON.stringify(tableOptions))
   
   logger.info('Extracting table name from schema...')
