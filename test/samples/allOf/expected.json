@@ -4,7 +4,7 @@
 			{
 				"name": "names",
 				"type": "RECORD",
-                "mode": "NULLABLE",
+				"mode": "NULLABLE",
 				"fields": [
 					{
 						"name": "first_name",

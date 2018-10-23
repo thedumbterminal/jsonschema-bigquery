@@ -7,6 +7,9 @@
     "test": "mocha test",
     "lint": "eslint ."
   },
+  "bin": {
+    "jsbq": "./bin/jsbq"
+  },
   "engines": {
     "node": ">=8"
   },

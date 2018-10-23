@@ -4,7 +4,7 @@
 			{
 				"name": "address",
 				"type": "RECORD",
-                "mode": "NULLABLE",
+				"mode": "NULLABLE",
 				"fields":[
 					{
 						"name": "street_address",
