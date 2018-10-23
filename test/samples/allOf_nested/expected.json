@@ -4,10 +4,12 @@
 			{
 				"name": "addresses",
 				"type": "RECORD",
+				"mode": "NULLABLE",
 				"fields": [
 					{
 						"name": "address",
 						"type": "RECORD",
+                        "mode": "NULLABLE",
 						"fields": [
 							{
 								"name": "street_address",
