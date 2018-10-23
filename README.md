@@ -7,8 +7,8 @@ Convert JSON schema to Google BigQuery schema
 
 This includes the ability to:
 
-(1) Create tables
-(2) Patch tables
+1. Create tables
+1. Patch tables
 
 Further enhancements are planned: delete tables (dev only), create dataset, set data ACLs
 
