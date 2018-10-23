@@ -1,0 +1,69 @@
+{
+    "id": "http://yourdomain.com/schemas/myschema.json",
+    "description": "Example description",
+    "allOf": [
+        {
+            "type": "object",
+            "properties": {
+                "tags": {
+                    "description": "The users additional information",
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "id": "/models/tags/v2.0.0/schema.json",
+                    "title": "Tag Array",
+                    "oneOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "redact": {
+                                    "type": "key_value",
+                                    "items": [
+                                        {
+                                            "key_property": "name",
+                                            "value_property": "string",
+                                            "key_value": "email",
+                                            "redact": {
+                                                "type": "email"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "The name of the tag that you want to include"
+                                    },
+                                    "string": {
+                                        "type": "string",
+                                        "description": "A string type data point for the tag"
+                                    },
+                                    "number": {
+                                        "type": "integer",
+                                        "description": "A integer type data point for the tag"
+                                    }
+                                },
+                                "anyOf": [
+                                    {
+                                        "required": [
+                                            "name",
+                                            "string"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "name",
+                                            "number"
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
