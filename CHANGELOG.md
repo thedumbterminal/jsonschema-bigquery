@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.0 (23/10/2018)
+
+* Rewrite with improved support for `allOf`, `anyOf` and `oneOf` combined schemas.
+
 ## v0.0.7 (13/08/2018)
 
 * Support fields with nullable types using `anyOf` method.

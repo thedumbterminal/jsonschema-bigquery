@@ -18,9 +18,6 @@ describe('index', () => {
         })
 
         it('converts to big query', () => {
-          if ( dir === 'oneof' ) {
-            console.log(JSON.stringify(result, null, 2))
-          }
           assert.deepStrictEqual(result, expected)
         })
       })
