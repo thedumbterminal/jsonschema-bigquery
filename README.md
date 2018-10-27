@@ -20,8 +20,8 @@ Note that some features involve bespoke interpretation of schema details suited 
 
 ## Consume
 
-    node jsbq.js -p <gbq project> -d <gbq dataset> -j <json schema file>
-    
+    jsbq -p <gbq project> -d <gbq dataset> -j <json schema file>
+
 For embedded usage the following will allow and support runtime schema conversion and table maintenance:
 
     const jsonSchemaBigquery = require('jsonschema-bigquery')
@@ -31,7 +31,7 @@ Please ensure that the input JSON schema is dereferenced so that all external re
 ## Test
 
     npm test
-    
+
 A standalone test script is also included that supports batch creation of tables in a nominated test dataset
 
 ## TODO

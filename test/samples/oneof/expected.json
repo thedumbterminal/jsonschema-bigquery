@@ -14,16 +14,16 @@
 					},
 					{
 						"name": "string",
-                        "description": "A string type data point for the tag",
+						"description": "A string type data point for the tag",
 						"type": "STRING",
 						"mode": "NULLABLE"
 					},
-                    {
-                        "name": "number",
-                        "description": "A integer type data point for the tag",
-                        "type": "INTEGER",
-                        "mode": "NULLABLE"
-                    }
+					{
+						"name": "number",
+						"description": "A integer type data point for the tag",
+						"type": "INTEGER",
+						"mode": "NULLABLE"
+					}
 				]
 			}
 		]
