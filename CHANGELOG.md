@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.1 (01/11/2018)
+
+* Bugfix for jsbq command.
+
 ## v0.1.0 (23/10/2018)
 
 * Rewrite with improved support for `allOf`, `anyOf` and `oneOf` combined schemas.
