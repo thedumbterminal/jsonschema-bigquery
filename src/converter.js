@@ -120,7 +120,7 @@ function array(name, node, mode){
     if (_.has(items_with_description,'description')){
         items_with_description['description'] = node['description']
     }
-    return visit(name, items_with_description, 'REPEATED')
+    return converter._visit(name, items_with_description, 'REPEATED')
 }
 
 function object_(name, node, mode){
@@ -129,7 +129,7 @@ function object_(name, node, mode){
 
     const fields = Object.keys(properties).map( key => {
         const required = required_properties.includes(key) ? 'REQUIRED' : 'NULLABLE'
-        return visit(key,properties[key], required)
+        return converter._visit(key,properties[key], required)
     })
 
     const result =  { 'name': name,
@@ -161,7 +161,14 @@ function simple(name, type_, node, mode){
     return scalar(name, actual_type, mode, node['description'])
 }
 
-function visit(name, node, mode='NULLABLE'){
+function get_table_id(schema){
+    const id = schema['id'].split('/')
+    const name = id[-4,-2]
+    const version = id[-2].split('.')[0]
+    return '_'.join(name + [version])
+}
+
+converter._visit = (name, node, mode='NULLABLE') => {
     var merged_node = node
     const ofs = ['allOf', 'anyOf', 'oneOf']
     for ( x=0 ; x<ofs.length ; x++ ){
@@ -176,7 +183,7 @@ function visit(name, node, mode='NULLABLE'){
     if (Array.isArray(type_)){
         non_null_types = type_.filter( scalar_type => scalar_type !== 'null')
         if (non_null_types.length > 1){
-            throw new Error('union type not supported: {node}')
+            throw new Error(`union type not supported:\n${JSON.stringify(node, null, 2)}`)
         }
         if ( type_.includes('null')){
             actual_mode = 'NULLABLE'
@@ -186,22 +193,10 @@ function visit(name, node, mode='NULLABLE'){
     return simple(name, type_, merged_node,  actual_mode)
 }
 
-function convert(input_schema){
+converter.run = (input_schema) => {
     return  {
         schema: {
-          fields: visit('root', input_schema).fields
+          fields: converter._visit('root', input_schema).fields
         }
     }
-}
-
-function get_table_id(schema){
-    const id = schema['id'].split('/')
-    const name = id[-4,-2]
-    const version = id[-2].split('.')[0]
-    return '_'.join(name + [version])
-}
-
-// The original bigjson entry point
-converter.run = (input_schema, project, dataset) => {
-    return convert(input_schema)
 }

@@ -2,8 +2,8 @@ const converter = require('../src/converter')
 const assert = require('assert')
 const fs = require('fs')
 
-describe('index', () => {
-  describe('convert()', () => {
+describe('converter', () => {
+  describe('run()', () => {
     const sampleDir = './test/samples'
     const testDirs = fs.readdirSync(sampleDir)
 
@@ -20,6 +20,22 @@ describe('index', () => {
         it('converts to big query', () => {
           assert.deepStrictEqual(result, expected)
         })
+      })
+    })
+  })
+
+  describe('_visit()', () => {
+    context('when multiple types are given', () => {
+      it('throws an error', () => {
+        assert.throws(() => {
+          const node = {
+            type: [
+              'string',
+              'boolean'
+            ]
+          }
+          converter._visit('test', node)
+        }, /union type not supported/)
       })
     })
   })
