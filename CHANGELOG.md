@@ -1,8 +1,12 @@
 # Changelog
 
+## v0.1.2 (11/11/2018)
+
+* Improved error message when dealing with union types.
+
 ## v0.1.1 (01/11/2018)
 
-* Bugfix for jsbq command.
+* Bug fix for jsbq command.
 
 ## v0.1.0 (23/10/2018)
 
