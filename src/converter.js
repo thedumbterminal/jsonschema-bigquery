@@ -38,6 +38,9 @@ function merge_property(merge_type, property_name, destination_value, source_val
     } else {
         source_list = [source_value]
     }
+    if (property_name === 'description') {
+        return destination_list.join(' ')
+    }
     if (property_name === 'required' && ['anyOf', 'oneOf'].includes(merge_type) ){
         return destination_list.filter( v => source_list.includes(v) )
     }
