@@ -1,0 +1,12 @@
+{
+	"schema": {
+		"fields": [
+			{
+				"description": "Any first name A type of first name Another type of first name",
+				"name": "first_name",
+				"type": "STRING",
+				"mode": "NULLABLE"
+			}
+		]
+	}
+}

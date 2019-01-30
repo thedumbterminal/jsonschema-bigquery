@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.0 (30/01/2019)
+
+* Support for nested descriptions.
+
 ## v0.1.2 (11/11/2018)
 
 * Improved error message when dealing with union types.
