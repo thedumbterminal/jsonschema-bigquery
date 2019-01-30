@@ -1,0 +1,26 @@
+{
+	"id": "http://yourdomain.com/schemas/myschema.json",
+	"description": "Example description",
+	"type": "object",
+	"properties": {
+		"first_name": {
+			"description": "Any first name",
+			"anyOf": [
+				{
+					"description": "A type of first name",
+					"type": "string",
+					"enum": [
+						"Bob"
+					]
+				},
+				{
+					"description": "Another type of first name",
+					"type": "string",
+					"enum": [
+						"Alice"
+					]
+				}
+			]
+		}
+	}
+}
