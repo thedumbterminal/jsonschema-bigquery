@@ -9,10 +9,6 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   string: 'STRING'
 }
 
-converter._isObject = (candidate) => {
-  return typeof candidate === 'object' && !Array.isArray(candidate)
-}
-
 converter._merge_property = (merge_type, property_name, destination_value, source_value) => {
   //Merges two properties.
   let destination_list
@@ -25,7 +21,7 @@ converter._merge_property = (merge_type, property_name, destination_value, sourc
   if(source_value === undefined){
     return destination_value
   }
-  if(converter._isObject(destination_value) && converter._isObject(source_value)){
+  if(_.isPlainObject(destination_value) && _.isPlainObject(source_value)){
     return converter._merge_dicts(merge_type, destination_value, source_value)
   }
   if(Array.isArray(destination_value)){
