@@ -9,5 +9,6 @@
 		"last_name": {
 			"type": "string"
 		}
-	}
+	},
+	"additionalProperties": false
 }
