@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.0 (01/04/2019)
+
+* Make `"additionalProperties": false` required for all `object` type properties in input JSON Schema.
+
 ## v1.0.0 (30/01/2019)
 
 * Support for nested descriptions.
