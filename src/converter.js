@@ -9,10 +9,6 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   string: 'STRING'
 }
 
-converter._isObject = (candidate) => {
-  return typeof candidate === 'object' && !Array.isArray(candidate)
-}
-
 converter._merge_property = (merge_type, property_name, destination_value, source_value) => {
   //Merges two properties.
   let destination_list
@@ -25,7 +21,10 @@ converter._merge_property = (merge_type, property_name, destination_value, sourc
   if(source_value === undefined){
     return destination_value
   }
-  if(converter._isObject(destination_value) && converter._isObject(source_value)){
+	if(typeof destination_value === 'boolean' && typeof source_value === 'boolean'){
+		return destination_value && source_value
+	}
+  if(_.isPlainObject(destination_value) && _.isPlainObject(source_value)){
     return converter._merge_dicts(merge_type, destination_value, source_value)
   }
   if(Array.isArray(destination_value)){
@@ -70,7 +69,7 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Arra
     for(let j=0; j<keys.length;j++){
       const name = keys[j]
       const merged_property = converter._merge_property(merge_type, name, result[name], source_dict[name])
-      if(merged_property){
+			if(merged_property !== undefined){
         result[name] = merged_property
       }
     }
@@ -93,7 +92,7 @@ converter._merge_dicts = (merge_type, dest_dict, source_dict) => { //Merges a si
   for(let j=0; j<keys.length;j++){
     const name = keys[j]
     const merged_property = converter._merge_property(merge_type, name, result[name], source_dict[name])
-    if(merged_property){
+		if(merged_property !== undefined){
       result[name] = merged_property
     }
   }
@@ -125,6 +124,9 @@ converter._array = (name, node, mode) => {
 }
 
 converter._object = (name, node, mode) => {
+	if (node.additionalProperties !== false) {
+		throw new Error(`'object' type properties must have an '"additionalProperties": false' property:\n${JSON.stringify(node, null, 2)}`)
+	}
   const required_properties = node['required'] || []
   const properties = node['properties']
 

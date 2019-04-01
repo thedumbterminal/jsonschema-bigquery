@@ -11,7 +11,8 @@
 						"first_name": {
 							"type": "string"
 						}
-					}
+					},
+					"additionalProperties": false
 				},
 				{
 					"type": "object",
@@ -19,9 +20,11 @@
 						"last_name": {
 							"type": "string"
 						}
-					}
+					},
+					"additionalProperties": false
 				}
 			]
 		}
-	}
+	},
+	"additionalProperties": false
 }

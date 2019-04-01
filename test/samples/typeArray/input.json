@@ -18,5 +18,6 @@
 	},
 	"required": [
 		"first_name"
-	]
+	],
+	"additionalProperties": false
 }
