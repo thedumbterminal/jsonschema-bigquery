@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.1 (07/04/2019)
+
+* Now throws an error if no type is given for a property.
+
 ## v2.0.0 (01/04/2019)
 
 * Make `"additionalProperties": false` required for all `object` type properties in input JSON Schema.
