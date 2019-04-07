@@ -172,10 +172,9 @@ converter._simple = (name, type_, node, mode) => {
 converter._visit = (name, node, mode='NULLABLE') => {
   let merged_node = node
   const ofs = ['allOf', 'anyOf', 'oneOf']
-  for(let x = 0; x < ofs.length; x++){
-    const x_of = ofs[x]
-    if(_.has(node,x_of)){
-      merged_node = converter._merge_dicts_array(x_of, node, _.get(node,x_of))
+  for(const x_of of ofs){
+    if(_.has(node, x_of)){
+      merged_node = converter._merge_dicts_array(x_of, node, _.get(node, x_of))
       delete merged_node[x_of]
     }
   }
@@ -191,7 +190,7 @@ converter._visit = (name, node, mode='NULLABLE') => {
     }
     type_ = non_null_types[0]
   }
-  return converter._simple(name, type_, merged_node,  actual_mode)
+  return converter._simple(name, type_, merged_node, actual_mode)
 }
 
 converter.run = (input_schema) => {
