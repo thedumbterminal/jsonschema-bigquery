@@ -63,7 +63,10 @@ jsbq.run = async () => {
   const schemaData = await readFile(argv.j)
   const jsonSchema = JSON.parse(schemaData)
   logger.debug('Schema is: ' + JSON.stringify(jsonSchema))
-  await jsbq.process(argv.p, argv.d, jsonSchema)
+  return jsbq.process(argv.p, argv.d, jsonSchema)
 }
 
-jsbq.run()
+jsbq.run().catch(e => {
+  logger.error(e)
+  process.exit(1)
+})
