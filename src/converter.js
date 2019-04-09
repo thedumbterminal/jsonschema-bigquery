@@ -9,6 +9,8 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   string: 'STRING'
 }
 
+const OFS = ['allOf', 'anyOf', 'oneOf']
+
 converter._merge_property = (merge_type, property_name, destination_value, source_value) => {
   //Merges two properties.
   let destination_list
@@ -57,18 +59,25 @@ converter._deepCopy = (o) => _.clone(o, true)
  * Cloned from the original merge_dicts from python-based bigjson
  * This method had variable expansion, varags  and two slightly different
  * usages which appeared to be incompatible.
- * 
- * Could be returned to a single method 
- * 
+ *
+ * Could be returned to a single method
+ *
  * See merge_dicts for the alternate call pattern
  */
 converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Array was *dicts, merges multiple
   const result = converter._deepCopy(dest_dict)
-  for(let i = 0; i < source_dicts.length; i++){
-    const source_dict = source_dicts[i]
+  for(let source_dict of source_dicts){
+
+    // First check if we need to recurse and merge deeper results first
+    for(const x_of of OFS){
+      if(_.has(source_dict, x_of)){
+        source_dict = converter._merge_dicts_array(x_of, source_dict, source_dict[x_of])
+        delete source_dict[x_of]
+      }
+    }
+
     const keys = Object.keys(source_dict)
-    for(let j=0; j<keys.length;j++){
-      const name = keys[j]
+    for(const name of keys){
       const merged_property = converter._merge_property(merge_type, name, result[name], source_dict[name])
       if(merged_property !== undefined){
         result[name] = merged_property
@@ -82,16 +91,15 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Arra
  * The original merge_dicts from python-based bigjson
  * This method had variable expansion, varags  and two slightly different
  * usages which appeared to be incompatible.
- * 
- * Could be returned to a single method 
- * 
+ *
+ * Could be returned to a single method
+ *
  * See merge_dicts_array above for the alternate call pattern
  **/
 converter._merge_dicts = (merge_type, dest_dict, source_dict) => { //Merges a single object
   const result = converter._deepCopy(dest_dict)
   const keys = Object.keys(source_dict)
-  for(let j=0; j<keys.length;j++){
-    const name = keys[j]
+  for(const name of keys){
     const merged_property = converter._merge_property(merge_type, name, result[name], source_dict[name])
     if(merged_property !== undefined){
       result[name] = merged_property
@@ -171,8 +179,7 @@ converter._simple = (name, type_, node, mode) => {
 
 converter._visit = (name, node, mode='NULLABLE') => {
   let merged_node = node
-  const ofs = ['allOf', 'anyOf', 'oneOf']
-  for(const x_of of ofs){
+  for(const x_of of OFS){
     if(_.has(node, x_of)){
       merged_node = converter._merge_dicts_array(x_of, node, _.get(node, x_of))
       delete merged_node[x_of]

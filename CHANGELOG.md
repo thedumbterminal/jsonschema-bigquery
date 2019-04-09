@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.2 (09/04/2019)
+
+* Supports nested combined schemas with null types.
+
 ## v2.0.1 (07/04/2019)
 
 * Now throws an error if no type is given for a property.

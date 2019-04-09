@@ -27,4 +27,77 @@ describe('converter', () => {
       })
     })
   })
+
+  describe('_merge_dicts_array()', () => {
+    context('with two string enums', () => {
+      it('returns the correct structure', () => {
+        const source = [
+          {
+            "type": "string",
+            "enum": [
+              "sweets"
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "shoes"
+            ]
+          }
+        ]
+        const result = converter._merge_dicts_array('oneOf', {}, source)
+        const expected = {
+          "enum": [
+            "sweets",
+            "shoes"
+          ],
+          "type": [
+            "string"
+          ]
+        }
+        assert.deepStrictEqual(result, expected)
+      })
+    })
+
+    context('with a nested oneOf containing two string enums', () => {
+      it('returns the correct structure', () => {
+        const source = [
+          {
+            oneOf: [
+              {
+                "type": "string",
+                "enum": [
+                  "sweets"
+                ]
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "shoes"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "string",
+            "enum": [
+              "bag"
+            ]
+          }
+        ]
+        const result = converter._merge_dicts_array('oneOf', {}, source)
+        const expected = {
+          "enum": [
+            "sweets",
+            "shoes",
+            "bag"
+          ],
+          "type": [
+            "string"
+          ]
+        }
+        assert.deepStrictEqual(result, expected)
+      })
+    })
+  })
 })
