@@ -21,9 +21,9 @@ converter._merge_property = (merge_type, property_name, destination_value, sourc
   if(source_value === undefined){
     return destination_value
   }
-	if(typeof destination_value === 'boolean' && typeof source_value === 'boolean'){
-		return destination_value && source_value
-	}
+  if(typeof destination_value === 'boolean' && typeof source_value === 'boolean'){
+    return destination_value && source_value
+  }
   if(_.isPlainObject(destination_value) && _.isPlainObject(source_value)){
     return converter._merge_dicts(merge_type, destination_value, source_value)
   }
@@ -32,6 +32,7 @@ converter._merge_property = (merge_type, property_name, destination_value, sourc
   }else{
     destination_list = [destination_value]
   }
+  let source_list
   if(Array.isArray(source_value)){
     source_list = source_value
   }else{
@@ -69,7 +70,7 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Arra
     for(let j=0; j<keys.length;j++){
       const name = keys[j]
       const merged_property = converter._merge_property(merge_type, name, result[name], source_dict[name])
-			if(merged_property !== undefined){
+      if(merged_property !== undefined){
         result[name] = merged_property
       }
     }
@@ -92,7 +93,7 @@ converter._merge_dicts = (merge_type, dest_dict, source_dict) => { //Merges a si
   for(let j=0; j<keys.length;j++){
     const name = keys[j]
     const merged_property = converter._merge_property(merge_type, name, result[name], source_dict[name])
-		if(merged_property !== undefined){
+    if(merged_property !== undefined){
       result[name] = merged_property
     }
   }
@@ -101,6 +102,9 @@ converter._merge_dicts = (merge_type, dest_dict, source_dict) => { //Merges a si
 
 converter._scalar = (name, type_, mode, description) => {
   const bigquery_type = JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT[type_]
+  if(!bigquery_type){
+    throw new Error(`Invalid type given: ${type_} for '${name}'`)
+  }
 
   const result = {
     name: name,
@@ -115,7 +119,7 @@ converter._scalar = (name, type_, mode, description) => {
   return result
 }
 
-converter._array = (name, node, mode) => {
+converter._array = (name, node) => {
   let items_with_description = converter._deepCopy(node['items'])
   if(_.has(items_with_description,'description')){
     items_with_description['description'] = node['description']
@@ -124,9 +128,9 @@ converter._array = (name, node, mode) => {
 }
 
 converter._object = (name, node, mode) => {
-	if (node.additionalProperties !== false) {
-		throw new Error(`'object' type properties must have an '"additionalProperties": false' property:\n${JSON.stringify(node, null, 2)}`)
-	}
+  if (node.additionalProperties !== false) {
+    throw new Error(`'object' type properties must have an '"additionalProperties": false' property:\n${JSON.stringify(node, null, 2)}`)
+  }
   const required_properties = node['required'] || []
   const properties = node['properties']
 
@@ -150,7 +154,7 @@ converter._object = (name, node, mode) => {
 
 converter._simple = (name, type_, node, mode) => {
   if(type_ === 'array'){
-    return converter._array(name, node, mode)
+    return converter._array(name, node)
   }
   if(type_ === 'object'){
     return converter._object(name, node, mode)
@@ -168,10 +172,9 @@ converter._simple = (name, type_, node, mode) => {
 converter._visit = (name, node, mode='NULLABLE') => {
   let merged_node = node
   const ofs = ['allOf', 'anyOf', 'oneOf']
-  for(x=0 ; x<ofs.length; x++){
-    const x_of = ofs[x]
-    if(_.has(node,x_of)){
-      merged_node = converter._merge_dicts_array(x_of, node, _.get(node,x_of))
+  for(const x_of of ofs){
+    if(_.has(node, x_of)){
+      merged_node = converter._merge_dicts_array(x_of, node, _.get(node, x_of))
       delete merged_node[x_of]
     }
   }
@@ -187,7 +190,7 @@ converter._visit = (name, node, mode='NULLABLE') => {
     }
     type_ = non_null_types[0]
   }
-  return converter._simple(name, type_, merged_node,  actual_mode)
+  return converter._simple(name, type_, merged_node, actual_mode)
 }
 
 converter.run = (input_schema) => {
