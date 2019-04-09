@@ -1,0 +1,17 @@
+{
+  "id": "http://yourdomain.com/schemas/myschema.json",
+  "type": "object",
+  "properties": {
+    "name": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

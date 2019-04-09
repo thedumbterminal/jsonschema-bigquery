@@ -1,0 +1,11 @@
+{
+  "schema": {
+    "fields": [
+      {
+        "mode": "NULLABLE",
+        "name": "name",
+        "type": "STRING"
+      }
+    ]
+  }
+}
