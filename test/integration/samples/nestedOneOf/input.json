@@ -1,0 +1,30 @@
+{
+  "id": "product.json",
+  "type": "object",
+  "properties": {
+    "product": {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "sweets"
+              ]
+            },
+            {
+              "type": "string",
+              "enum": [
+                "shoes"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

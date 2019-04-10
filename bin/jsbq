@@ -13,7 +13,11 @@ jsbq.process = async (project, datasetName, jsonSchema) => {
   logger.info('Processing json schema...')
   const tableOptions = converter.run(jsonSchema)
   logger.info(JSON.stringify(tableOptions))
-  
+
+  if (!project && !datasetName) {
+    return logger.info('Skipping table operations')
+  }
+
   logger.info('Extracting table name from schema...')
   const tableName = util.get_table_id(jsonSchema.id)
   logger.info('Table name is ' + tableName)
@@ -41,14 +45,28 @@ jsbq.run = async () => {
   const readFile = promisify(fs.readFile)
 
   const argv = require('yargs')
-  .usage('Usage: $0 -p [project] -d [dataset] -j [json schema file]')
-  .demandOption(['p', 'd', 'j'])
+  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file>')
+  .options({
+    j: {
+      describe: 'JSON schema file',
+      demandOption: true
+    },
+    p: {
+      describe: 'GCP project name'
+    },
+    d: {
+      describe: 'BigQuery dataset name'
+    }
+  })
   .argv
 
   const schemaData = await readFile(argv.j)
   const jsonSchema = JSON.parse(schemaData)
   logger.debug('Schema is: ' + JSON.stringify(jsonSchema))
-  await jsbq.process(argv.p, argv.d, jsonSchema)
+  return jsbq.process(argv.p, argv.d, jsonSchema)
 }
 
-jsbq.run()
+jsbq.run().catch(e => {
+  logger.error(e)
+  process.exit(1)
+})
