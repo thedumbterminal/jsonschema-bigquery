@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.1 (07/05/2019)
+
+* Set requirePartitionFilter to true when creating GBQ tables
+
 ## v2.0.0 (01/04/2019)
 
 * Make `"additionalProperties": false` required for all `object` type properties in input JSON Schema.
