@@ -22,7 +22,8 @@ jsbq.process = async (project, datasetName, jsonSchema) => {
   tableOptions.friendly_name = jsonSchema.title
   tableOptions.description = jsonSchema.description || jsonSchema.title
   tableOptions.timePartitioning = {
-    'type': 'DAY'
+    'type': 'DAY',
+    'requirePartitionFilter': true
   }
 
   logger.info('Checking if table exists...')
