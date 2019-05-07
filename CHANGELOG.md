@@ -1,8 +1,17 @@
 # Changelog
 
-## v2.0.1 (07/05/2019)
+## v2.0.3 (07/05/2019)
 
 * Set requirePartitionFilter to true when creating GBQ tables
+
+## v2.0.2 (09/04/2019)
+
+* Supports nested combined schemas with null types.
+* `jsbq` can convert and print a schema without touching BigQuery.
+
+## v2.0.1 (07/04/2019)
+
+* Now throws an error if no type is given for a property.
 
 ## v2.0.0 (01/04/2019)
 
