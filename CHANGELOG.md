@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.3 (07/05/2019)
+
+* Set requirePartitionFilter to true when creating GBQ tables
+
 ## v2.0.2 (09/04/2019)
 
 * Supports nested combined schemas with null types.
