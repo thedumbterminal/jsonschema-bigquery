@@ -136,7 +136,7 @@ converter._array = (name, node) => {
 }
 
 converter._object = (name, node, mode) => {
-  if (node.additionalProperties !== false) {
+  if (node.additionalProperties !== false && !converter._options.ignoreAdditional) {
     throw new Error(`'object' type properties must have an '"additionalProperties": false' property:\n${JSON.stringify(node, null, 2)}`)
   }
   const required_properties = node['required'] || []
@@ -200,7 +200,8 @@ converter._visit = (name, node, mode='NULLABLE') => {
   return converter._simple(name, type_, merged_node, actual_mode)
 }
 
-converter.run = (input_schema) => {
+converter.run = (input_schema, options = {}) => {
+  converter._options = options
   return {
     schema: {
       fields: converter._visit('root', input_schema).fields

@@ -100,4 +100,53 @@ describe('converter', () => {
       })
     })
   })
+
+  describe('_object()', () => {
+    context('without the "ignoreAdditional" option', () => {
+      beforeEach(() => {
+        converter._options = {}
+      })
+
+      it('does not allow additional properties', () => {
+        const node = {
+          properties: {}
+        }
+        assert.throws(() => {
+          converter._object('test', node, 'NULLABLE')
+        }, /'object' type properties must have an '"additionalProperties": false' property/)
+      })
+    })
+    context('with the "ignoreAdditional" option', () => {
+      beforeEach(() => {
+        converter._options = {
+          ignoreAdditional: true
+        }
+      })
+
+      it('allows additional properties', () => {
+        const node = {
+          properties: {}
+        }
+        assert.doesNotThrow(() => {
+          converter._object('test', node, 'NULLABLE')
+        }, /'object' type properties must have an '"additionalProperties": false' property/)
+      })
+    })
+  })
+
+  describe('run()', () => {
+    beforeEach(() => {
+      converter.run({
+        type: 'boolean'
+      }, {
+        option: true
+      })
+    })
+
+    it('sets given options', () => {
+      assert.deepStrictEqual(converter._options, {
+        option: true
+      })
+    })
+  })
 })
