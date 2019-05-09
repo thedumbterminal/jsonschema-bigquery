@@ -11,7 +11,6 @@ const { promisify } = require('util')
 
 jsbq.process = async (project, datasetName, jsonSchema, options) => {
   logger.info('Processing json schema...')
-  logger.info(options);
   const tableOptions = converter.run(jsonSchema, options)
   logger.info(JSON.stringify(tableOptions))
 
