@@ -9,10 +9,10 @@ const logger = require('log-driver').logger
 const fs = require('fs')
 const { promisify } = require('util')
 
-jsbq.process = async (project, datasetName, jsonSchema, ignoreAdditional) => {
+jsbq.process = async (project, datasetName, jsonSchema, options) => {
   logger.info('Processing json schema...')
-  logger.info(ignoreAdditional);
-  const tableOptions = converter.run(jsonSchema, ignoreAdditional)
+  logger.info(options);
+  const tableOptions = converter.run(jsonSchema, options)
   logger.info(JSON.stringify(tableOptions))
 
   if (!project && !datasetName) {
@@ -66,11 +66,11 @@ jsbq.run = async () => {
   .argv
 
   const schemaData = await readFile(argv.j)
-  logger.info('argv.ignoreAdditional-> ' + argv.ignoreAdditional);
-  const ignoreAdditional = argv.ignoreAdditional === 'true' ? { ignoreAdditional: true } : { ignoreAdditional: false }
+  options = {};
+  options['ignoreAdditional'] = (argv.ignoreAdditional === 'true')
   const jsonSchema = JSON.parse(schemaData)
   logger.debug('Schema is: ' + JSON.stringify(jsonSchema))
-  return jsbq.process(argv.p, argv.d, jsonSchema, ignoreAdditional)
+  return jsbq.process(argv.p, argv.d, jsonSchema, options)
 }
 
 jsbq.run().catch(e => {
