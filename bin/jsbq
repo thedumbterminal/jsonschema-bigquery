@@ -11,6 +11,7 @@ const { promisify } = require('util')
 
 jsbq.process = async (project, datasetName, jsonSchema, ignoreAdditional) => {
   logger.info('Processing json schema...')
+  logger.info(ignoreAdditional);
   const tableOptions = converter.run(jsonSchema, ignoreAdditional)
   logger.info(JSON.stringify(tableOptions))
 
@@ -46,7 +47,7 @@ jsbq.run = async () => {
   const readFile = promisify(fs.readFile)
 
   const argv = require('yargs')
-  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file> ignoreAdditional <boolean>')
+  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file> --ignoreAdditional <boolean>')
   .options({
     j: {
       describe: 'JSON schema file',
@@ -65,7 +66,8 @@ jsbq.run = async () => {
   .argv
 
   const schemaData = await readFile(argv.j)
-  const ignoreAdditional = argv.ignoreAdditional ? { ignoreAdditional: true } : { ignoreAdditional: false }
+  logger.info('argv.ignoreAdditional-> ' + argv.ignoreAdditional);
+  const ignoreAdditional = argv.ignoreAdditional === 'true' ? { ignoreAdditional: true } : { ignoreAdditional: false }
   const jsonSchema = JSON.parse(schemaData)
   logger.debug('Schema is: ' + JSON.stringify(jsonSchema))
   return jsbq.process(argv.p, argv.d, jsonSchema, ignoreAdditional)
