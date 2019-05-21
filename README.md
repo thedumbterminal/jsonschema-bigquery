@@ -33,11 +33,11 @@ Please ensure that the input JSON schema is dereferenced so that all external re
 
 ```
 {
-  ignoreAdditional: true
+  preventAdditionalObjectProperties: true
 }
 ```
 
-* `ignoreAdditional` - boolean, skip checking for additional properties in schemas.
+* `preventAdditionalObjectProperties` - boolean, check for additional object properties in schemas.
 
 ## Test
 

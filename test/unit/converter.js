@@ -102,25 +102,9 @@ describe('converter', () => {
   })
 
   describe('_object()', () => {
-    context('without the "ignoreAdditional" option', () => {
+    context('without the "preventAdditionalObjectProperties" option', () => {
       beforeEach(() => {
         converter._options = {}
-      })
-
-      it('does not allow additional properties', () => {
-        const node = {
-          properties: {}
-        }
-        assert.throws(() => {
-          converter._object('test', node, 'NULLABLE')
-        }, /'object' type properties must have an '"additionalProperties": false' property/)
-      })
-    })
-    context('with the "ignoreAdditional" option', () => {
-      beforeEach(() => {
-        converter._options = {
-          ignoreAdditional: true
-        }
       })
 
       it('allows additional properties', () => {
@@ -128,6 +112,23 @@ describe('converter', () => {
           properties: {}
         }
         assert.doesNotThrow(() => {
+          converter._object('test', node, 'NULLABLE')
+        }, /'object' type properties must have an '"additionalProperties": false' property/)
+      })
+    })
+
+    context('with the "ignoreAdditional" option', () => {
+      beforeEach(() => {
+        converter._options = {
+            preventAdditionalObjectProperties: true
+        }
+      })
+
+      it('does not allow additional properties', () => {
+        const node = {
+          properties: {}
+        }
+        assert.throws(() => {
           converter._object('test', node, 'NULLABLE')
         }, /'object' type properties must have an '"additionalProperties": false' property/)
       })

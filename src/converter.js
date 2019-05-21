@@ -12,7 +12,7 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
 const OFS = ['allOf', 'anyOf', 'oneOf']
 
 converter._merge_property = (merge_type, property_name, destination_value, source_value) => {
-  //Merges two properties.
+  // Merges two properties.
   let destination_list
   if(destination_value === undefined && source_value === undefined){
     return undefined
@@ -56,12 +56,12 @@ converter._copy = (o) => _.clone(o, false)
 converter._deepCopy = (o) => _.clone(o, true)
 
 /**
- * Cloned from the original merge_dicts from python-based bigjson
- * This method had variable expansion, varags  and two slightly different
- * usages which appeared to be incompatible.
- *
+ * Cloned from the original merge_dicts from python-based bigjson This method
+ * had variable expansion, varags and two slightly different usages which
+ * appeared to be incompatible.
+ * 
  * Could be returned to a single method
- *
+ * 
  * See merge_dicts for the alternate call pattern
  */
 converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Array was *dicts, merges multiple
@@ -88,12 +88,12 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Arra
 }
 
 /**
- * The original merge_dicts from python-based bigjson
- * This method had variable expansion, varags  and two slightly different
- * usages which appeared to be incompatible.
- *
+ * The original merge_dicts from python-based bigjson This method had variable
+ * expansion, varags and two slightly different usages which appeared to be
+ * incompatible.
+ * 
  * Could be returned to a single method
- *
+ * 
  * See merge_dicts_array above for the alternate call pattern
  **/
 converter._merge_dicts = (merge_type, dest_dict, source_dict) => { //Merges a single object
@@ -136,7 +136,7 @@ converter._array = (name, node) => {
 }
 
 converter._object = (name, node, mode) => {
-  if (node.additionalProperties !== false && !converter._options.ignoreAdditional) {
+  if (node.additionalProperties !== false && converter._options.preventAdditionalObjectProperties) {
     throw new Error(`'object' type properties must have an '"additionalProperties": false' property:\n${JSON.stringify(node, null, 2)}`)
   }
   const required_properties = node['required'] || []
