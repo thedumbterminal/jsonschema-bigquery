@@ -9,9 +9,9 @@ const logger = require('log-driver').logger
 const fs = require('fs')
 const { promisify } = require('util')
 
-jsbq.process = async (project, datasetName, jsonSchema) => {
+jsbq.process = async (project, datasetName, jsonSchema, options) => {
   logger.info('Processing json schema...')
-  const tableOptions = converter.run(jsonSchema)
+  const tableOptions = converter.run(jsonSchema, options)
   logger.info(JSON.stringify(tableOptions))
 
   if (!project && !datasetName) {
@@ -46,7 +46,7 @@ jsbq.run = async () => {
   const readFile = promisify(fs.readFile)
 
   const argv = require('yargs')
-  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file>')
+  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file> --ignoreAdditional <boolean>')
   .options({
     j: {
       describe: 'JSON schema file',
@@ -57,14 +57,19 @@ jsbq.run = async () => {
     },
     d: {
       describe: 'BigQuery dataset name'
+    },
+    ignoreAdditional: {
+      describe: 'skip checking for additional properties in schemas'
     }
   })
   .argv
 
   const schemaData = await readFile(argv.j)
+  options = {};
+  options['ignoreAdditional'] = (argv.ignoreAdditional === 'true')
   const jsonSchema = JSON.parse(schemaData)
   logger.debug('Schema is: ' + JSON.stringify(jsonSchema))
-  return jsbq.process(argv.p, argv.d, jsonSchema)
+  return jsbq.process(argv.p, argv.d, jsonSchema, options)
 }
 
 jsbq.run().catch(e => {
