@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.0 (08/05/2019)
+
+* `additionalProperties` check is now optional.
+
 ## v2.0.3 (07/05/2019)
 
 * Set requirePartitionFilter to true when creating GBQ tables
