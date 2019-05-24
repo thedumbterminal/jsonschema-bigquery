@@ -20,7 +20,7 @@ Note that some features involve bespoke interpretation of schema details suited 
 
 ## Consume
 
-    jsbq -p <gbq project> -d <gbq dataset> -j <json schema file> --ignoreAdditional <boolean>
+    jsbq -p <gbq project> -d <gbq dataset> -j <json schema file> --preventAdditionalObjectProperties
 
 For embedded usage the following will allow and support runtime schema conversion and table maintenance:
 

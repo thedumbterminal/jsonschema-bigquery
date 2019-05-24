@@ -46,7 +46,7 @@ jsbq.run = async () => {
   const readFile = promisify(fs.readFile)
 
   const argv = require('yargs')
-  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file> --ignoreAdditional <boolean>')
+  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file> --preventAdditionalObjectProperties')
   .options({
     j: {
       describe: 'JSON schema file',
@@ -58,15 +58,18 @@ jsbq.run = async () => {
     d: {
       describe: 'BigQuery dataset name'
     },
-    ignoreAdditional: {
-      describe: 'skip checking for additional properties in schemas'
+    preventAdditionalObjectProperties: {
+      describe: 'boolean, check for additional object properties in schemas.',
+      type: 'boolean',
+      default: false
     }
   })
   .argv
 
   const schemaData = await readFile(argv.j)
-  options = {};
-  options['ignoreAdditional'] = (argv.ignoreAdditional === 'true')
+  const options = {
+    preventAdditionalObjectProperties: argv.preventAdditionalObjectProperties
+  }
   const jsonSchema = JSON.parse(schemaData)
   logger.debug('Schema is: ' + JSON.stringify(jsonSchema))
   return jsbq.process(argv.p, argv.d, jsonSchema, options)
