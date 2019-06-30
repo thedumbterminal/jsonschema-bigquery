@@ -102,14 +102,18 @@ describe('converter', () => {
   })
 
   describe('_object()', () => {
-    context('without the "preventAdditionalObjectProperties" option', () => {
-      beforeEach(() => {
-        converter._options = {}
-      })
+    beforeEach(() => {
+      converter._options = {}
+    })
 
+    context('without the "preventAdditionalObjectProperties" option', () => {
       it('allows additional properties', () => {
         const node = {
-          properties: {}
+          properties: {
+            name: {
+              type: 'string'
+            }
+          }
         }
         assert.doesNotThrow(() => {
           converter._object('test', node, 'NULLABLE')
@@ -120,7 +124,7 @@ describe('converter', () => {
     context('with the "ignoreAdditional" option', () => {
       beforeEach(() => {
         converter._options = {
-            preventAdditionalObjectProperties: true
+          preventAdditionalObjectProperties: true
         }
       })
 
@@ -131,6 +135,25 @@ describe('converter', () => {
         assert.throws(() => {
           converter._object('test', node, 'NULLABLE')
         }, /'object' type properties must have an '"additionalProperties": false' property/)
+      })
+    })
+
+    context('with no properties', () => {
+      it('does not allow objects to not have properties defined', () => {
+        assert.throws(() => {
+          converter._object('test', {}, 'NULLABLE')
+        }, /No properties defined for object/)
+      })
+    })
+
+    context('with zero properties', () => {
+      it('does not allow objects to have zero properties defined', () => {
+        const node = {
+          properties: {}
+        }
+        assert.throws(() => {
+          converter._object('test', node, 'NULLABLE')
+        }, /Record fields must have one or more child fields/)
       })
     })
   })
