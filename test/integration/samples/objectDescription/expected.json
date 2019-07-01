@@ -1,0 +1,19 @@
+{
+	"schema": {
+		"fields": [
+			{
+				"name": "address",
+				"type": "RECORD",
+				"mode": "NULLABLE",
+				"description": "An address",
+				"fields":[
+					{
+						"name": "street_address",
+						"type": "STRING",
+						"mode": "NULLABLE"
+					}
+				]
+			}
+		]
+	}
+}

@@ -160,7 +160,7 @@ converter._object = (name, node, mode) => {
     fields: fields
   }
 
-  if(node.decription){
+  if(node.description){
     result.description = node.description
   }
   return result
