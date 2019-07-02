@@ -139,8 +139,14 @@ converter._object = (name, node, mode) => {
   if (node.additionalProperties !== false && converter._options.preventAdditionalObjectProperties) {
     throw new Error(`'object' type properties must have an '"additionalProperties": false' property:\n${JSON.stringify(node, null, 2)}`)
   }
-  const required_properties = node['required'] || []
-  const properties = node['properties']
+  if(!_.isPlainObject(node.properties)){
+    throw new Error(`No properties defined for object:\n${JSON.stringify(node, null, 2)}`)
+  }
+  if(Object.keys(node.properties).length === 0){
+    throw new Error(`Record fields must have one or more child fields:\n${JSON.stringify(node, null, 2)}`)
+  }
+  const required_properties = node.required || []
+  const properties = node.properties
 
   const fields = Object.keys(properties).map( key => {
     const required = required_properties.includes(key) ? 'REQUIRED' : 'NULLABLE'
@@ -154,8 +160,8 @@ converter._object = (name, node, mode) => {
     fields: fields
   }
 
-  if(node['decription']){
-    result.description = node['description']
+  if(node.description){
+    result.description = node.description
   }
   return result
 }

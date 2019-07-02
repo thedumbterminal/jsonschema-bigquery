@@ -1,0 +1,18 @@
+{
+	"id": "http://yourdomain.com/schemas/myschema.json",
+	"description": "Object description",
+	"type": "object",
+	"properties": {
+		"address": {
+			"description": "An address",
+			"type": "object",
+			"properties": {
+				"street_address": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": false
+		}
+	},
+	"additionalProperties": false
+}

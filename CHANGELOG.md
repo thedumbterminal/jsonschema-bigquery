@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.1.0 (30/06/2019)
+
+* Now throws an error if properties of an object has not been given or does not contain any fields.
+* Object descriptions are now processed correctly
+
 ## v3.0.0 (08/05/2019)
 
 * `additionalProperties` check is now optional.
