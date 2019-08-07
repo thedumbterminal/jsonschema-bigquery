@@ -56,6 +56,8 @@ converter._copy = (o) => _.clone(o, false)
 converter._deepCopy = (o) => _.clone(o, true)
 
 /**
+ * Merges multiple sources given as an Array was *dicts,
+ * 
  * Cloned from the original merge_dicts from python-based bigjson This method
  * had variable expansion, varags and two slightly different usages which
  * appeared to be incompatible.
@@ -64,7 +66,7 @@ converter._deepCopy = (o) => _.clone(o, true)
  * 
  * See merge_dicts for the alternate call pattern
  */
-converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Array was *dicts, merges multiple
+converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => {
   const result = converter._deepCopy(dest_dict)
   for(let source_dict of source_dicts){
 
@@ -88,6 +90,8 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Arra
 }
 
 /**
+ * Merges a single object
+ * 
  * The original merge_dicts from python-based bigjson This method had variable
  * expansion, varags and two slightly different usages which appeared to be
  * incompatible.
@@ -95,8 +99,8 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Arra
  * Could be returned to a single method
  * 
  * See merge_dicts_array above for the alternate call pattern
- **/
-converter._merge_dicts = (merge_type, dest_dict, source_dict) => { //Merges a single object
+ */
+converter._merge_dicts = (merge_type, dest_dict, source_dict) => {
   const result = converter._deepCopy(dest_dict)
   const keys = Object.keys(source_dict)
   for(const name of keys){

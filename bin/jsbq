@@ -5,14 +5,15 @@ const jsbq = module.exports = {}
 const gbq = require('../src/gbq')
 const util = require('../src/util')
 const converter = require('../src/converter')
-const logger = require('log-driver').logger
+const { logger } = require('../src/log')
 const fs = require('fs')
 const { promisify } = require('util')
 
 jsbq.process = async (project, datasetName, jsonSchema, options) => {
-  logger.info('Processing json schema...')
+  logger.info('Processing JSON schema...')
   const tableOptions = converter.run(jsonSchema, options)
-  logger.info(JSON.stringify(tableOptions))
+  logger.info('Generated BigQuery schema:')
+  console.log(JSON.stringify(tableOptions, null, 2))
 
   if (!project && !datasetName) {
     return logger.info('Skipping table operations')
@@ -20,7 +21,7 @@ jsbq.process = async (project, datasetName, jsonSchema, options) => {
 
   logger.info('Extracting table name from schema...')
   const tableName = util.get_table_id(jsonSchema.id)
-  logger.info('Table name is ' + tableName)
+  logger.info('Table name:', tableName)
 
   logger.info('Setting table options...')
   tableOptions.friendly_name = jsonSchema.title
@@ -33,10 +34,10 @@ jsbq.process = async (project, datasetName, jsonSchema, options) => {
   logger.info('Checking if table exists...')
   const tableExists = await gbq.tableExists(project, datasetName, tableName)
   if (tableExists) {
-    logger.info('Patching table ' + tableName)
+    logger.info('Patching table:', tableName)
     await gbq.patchTable(project, datasetName, tableName, tableOptions)
   } else {
-    logger.info('Creating table ' + tableName)
+    logger.info('Creating table:', tableName)
     await gbq.createTable(project, datasetName, tableName, tableOptions)
   }
   logger.info('Finished')
@@ -62,16 +63,26 @@ jsbq.run = async () => {
       describe: 'boolean, check for additional object properties in schemas.',
       type: 'boolean',
       default: false
+    },
+    debug: {
+      describe: 'Enable debug logging',
+      type: 'boolean',
+      default: false
     }
   })
   .argv
+
+  if (argv.debug) {
+    logger.level = 'debug'
+    logger.debug('Debug mode enabled')
+  }
 
   const schemaData = await readFile(argv.j)
   const options = {
     preventAdditionalObjectProperties: argv.preventAdditionalObjectProperties
   }
   const jsonSchema = JSON.parse(schemaData)
-  logger.debug('Schema is: ' + JSON.stringify(jsonSchema))
+  logger.debug('Input schema: ', jsonSchema)
   return jsbq.process(argv.p, argv.d, jsonSchema, options)
 }
 
