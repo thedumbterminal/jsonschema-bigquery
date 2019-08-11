@@ -1,5 +1,6 @@
 const converter = module.exports = {}
 const _ = require('lodash')
+const { SchemaError } = require('./errors')
 
 const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   boolean: 'BOOLEAN',
@@ -115,7 +116,7 @@ converter._merge_dicts = (merge_type, dest_dict, source_dict) => {
 converter._scalar = (name, type_, mode, description) => {
   const bigquery_type = JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT[type_]
   if(!bigquery_type){
-    throw new Error(`Invalid type given: ${type_} for '${name}'`)
+    throw new SchemaError(`Invalid type given: ${type_} for '${name}'`)
   }
 
   const result = {
@@ -141,13 +142,13 @@ converter._array = (name, node) => {
 
 converter._object = (name, node, mode) => {
   if (node.additionalProperties !== false && converter._options.preventAdditionalObjectProperties) {
-    throw new Error(`'object' type properties must have an '"additionalProperties": false' property:\n${JSON.stringify(node, null, 2)}`)
+    throw new SchemaError('"object" type properties must have an \'"additionalProperties": false\' property', node)
   }
   if(!_.isPlainObject(node.properties)){
-    throw new Error(`No properties defined for object:\n${JSON.stringify(node, null, 2)}`)
+    throw new SchemaError('No properties defined for object', node)
   }
   if(Object.keys(node.properties).length === 0){
-    throw new Error(`Record fields must have one or more child fields:\n${JSON.stringify(node, null, 2)}`)
+    throw new SchemaError('Record fields must have one or more child fields', node)
   }
   const required_properties = node.required || []
   const properties = node.properties
@@ -200,7 +201,7 @@ converter._visit = (name, node, mode='NULLABLE') => {
   if(Array.isArray(type_)){
     const non_null_types = type_.filter(scalar_type => scalar_type !== 'null')
     if(non_null_types.length > 1){
-      throw new Error(`union type not supported:\n${JSON.stringify(node, null, 2)}`)
+      throw new SchemaError('Union type not supported', node)
     }
     if(type_.includes('null')){
       actual_mode = 'NULLABLE'

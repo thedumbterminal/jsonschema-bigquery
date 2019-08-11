@@ -3,7 +3,7 @@
 const jsbq = module.exports = {}
 
 const gbq = require('../src/gbq')
-const util = require('../src/util')
+const utils = require('../src/utils')
 const converter = require('../src/converter')
 const { logger } = require('../src/log')
 const fs = require('fs')
@@ -13,14 +13,14 @@ jsbq.process = async (project, datasetName, jsonSchema, options) => {
   logger.info('Processing JSON schema...')
   const tableOptions = converter.run(jsonSchema, options)
   logger.info('Generated BigQuery schema:')
-  console.log(JSON.stringify(tableOptions, null, 2))
+  console.log(utils.inspector(tableOptions))
 
   if (!project && !datasetName) {
     return logger.info('Skipping table operations')
   }
 
   logger.info('Extracting table name from schema...')
-  const tableName = util.get_table_id(jsonSchema.id)
+  const tableName = utils.get_table_id(jsonSchema.id)
   logger.info('Table name:', tableName)
 
   logger.info('Setting table options...')
