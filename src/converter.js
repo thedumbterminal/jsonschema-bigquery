@@ -1,5 +1,6 @@
 const converter = module.exports = {}
 const _ = require('lodash')
+const { SchemaError } = require('./errors')
 
 const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   boolean: 'BOOLEAN',
@@ -56,6 +57,8 @@ converter._copy = (o) => _.clone(o, false)
 converter._deepCopy = (o) => _.clone(o, true)
 
 /**
+ * Merges multiple sources given as an Array was *dicts,
+ * 
  * Cloned from the original merge_dicts from python-based bigjson This method
  * had variable expansion, varags and two slightly different usages which
  * appeared to be incompatible.
@@ -64,7 +67,7 @@ converter._deepCopy = (o) => _.clone(o, true)
  * 
  * See merge_dicts for the alternate call pattern
  */
-converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Array was *dicts, merges multiple
+converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => {
   const result = converter._deepCopy(dest_dict)
   for(let source_dict of source_dicts){
 
@@ -88,6 +91,8 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Arra
 }
 
 /**
+ * Merges a single object
+ * 
  * The original merge_dicts from python-based bigjson This method had variable
  * expansion, varags and two slightly different usages which appeared to be
  * incompatible.
@@ -95,8 +100,8 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => { //Arra
  * Could be returned to a single method
  * 
  * See merge_dicts_array above for the alternate call pattern
- **/
-converter._merge_dicts = (merge_type, dest_dict, source_dict) => { //Merges a single object
+ */
+converter._merge_dicts = (merge_type, dest_dict, source_dict) => {
   const result = converter._deepCopy(dest_dict)
   const keys = Object.keys(source_dict)
   for(const name of keys){
@@ -111,7 +116,7 @@ converter._merge_dicts = (merge_type, dest_dict, source_dict) => { //Merges a si
 converter._scalar = (name, type_, mode, description) => {
   const bigquery_type = JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT[type_]
   if(!bigquery_type){
-    throw new Error(`Invalid type given: ${type_} for '${name}'`)
+    throw new SchemaError(`Invalid type given: ${type_} for '${name}'`)
   }
 
   const result = {
@@ -137,13 +142,13 @@ converter._array = (name, node) => {
 
 converter._object = (name, node, mode) => {
   if (node.additionalProperties !== false && converter._options.preventAdditionalObjectProperties) {
-    throw new Error(`'object' type properties must have an '"additionalProperties": false' property:\n${JSON.stringify(node, null, 2)}`)
+    throw new SchemaError('"object" type properties must have an \'"additionalProperties": false\' property', node)
   }
   if(!_.isPlainObject(node.properties)){
-    throw new Error(`No properties defined for object:\n${JSON.stringify(node, null, 2)}`)
+    throw new SchemaError('No properties defined for object', node)
   }
   if(Object.keys(node.properties).length === 0){
-    throw new Error(`Record fields must have one or more child fields:\n${JSON.stringify(node, null, 2)}`)
+    throw new SchemaError('Record fields must have one or more child fields', node)
   }
   const required_properties = node.required || []
   const properties = node.properties
@@ -196,7 +201,7 @@ converter._visit = (name, node, mode='NULLABLE') => {
   if(Array.isArray(type_)){
     const non_null_types = type_.filter(scalar_type => scalar_type !== 'null')
     if(non_null_types.length > 1){
-      throw new Error(`union type not supported:\n${JSON.stringify(node, null, 2)}`)
+      throw new SchemaError('Union type not supported', node)
     }
     if(type_.includes('null')){
       actual_mode = 'NULLABLE'

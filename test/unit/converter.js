@@ -13,7 +13,7 @@ describe('converter', () => {
             ]
           }
           converter._visit('test', node)
-        }, /union type not supported/)
+        }, /Union type not supported/)
       })
     })
   })
@@ -117,7 +117,7 @@ describe('converter', () => {
         }
         assert.doesNotThrow(() => {
           converter._object('test', node, 'NULLABLE')
-        }, /'object' type properties must have an '"additionalProperties": false' property/)
+        }, /"object" type properties must have an '"additionalProperties": false' property/)
       })
     })
 
@@ -134,7 +134,7 @@ describe('converter', () => {
         }
         assert.throws(() => {
           converter._object('test', node, 'NULLABLE')
-        }, /'object' type properties must have an '"additionalProperties": false' property/)
+        }, /"object" type properties must have an '"additionalProperties": false' property/)
       })
     })
 

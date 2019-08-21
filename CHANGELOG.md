@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.1 (07/08/2019)
+
+* Logging now sent to STDERR.
+
 ## v3.1.0 (30/06/2019)
 
 * Now throws an error if properties of an object has not been given or does not contain any fields.
