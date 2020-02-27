@@ -10,16 +10,9 @@ class SchemaError extends Error {
     }
 
     this.name = 'SchemaError'
-    this._node = node
-  }
-
-  toString() {
-    let msg = super.toString()
-    if (!this._node) {
-      return msg
+    if (node) {
+      this.message += ':\n' + utils.inspector(node)
     }
-    msg += ':\n' + utils.inspector(this._node)
-    return msg
   }
 }
 
