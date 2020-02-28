@@ -7,7 +7,8 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   'date-time': 'TIMESTAMP',
   integer: 'INTEGER',
   number: 'FLOAT',
-  string: 'STRING'
+  string: 'STRING',
+  date: 'DATE'
 }
 
 const OFS = ['allOf', 'anyOf', 'oneOf']
@@ -59,9 +60,8 @@ converter._deepCopy = (o) => _.clone(o, true)
 /**
  * Merges multiple sources given as an Array was *dicts,
  * 
- * Cloned from the original merge_dicts from python-based bigjson This method
- * had variable expansion, varags and two slightly different usages which
- * appeared to be incompatible.
+ * Cloned from the original merge_dicts from python-based bigjson This method had variable
+ * expansion, varags and two slightly different usages which appeared to be incompatible.
  * 
  * Could be returned to a single method
  * 
@@ -93,9 +93,8 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => {
 /**
  * Merges a single object
  * 
- * The original merge_dicts from python-based bigjson This method had variable
- * expansion, varags and two slightly different usages which appeared to be
- * incompatible.
+ * The original merge_dicts from python-based bigjson This method had variable expansion, varags and
+ * two slightly different usages which appeared to be incompatible.
  * 
  * Could be returned to a single method
  * 
@@ -113,15 +112,10 @@ converter._merge_dicts = (merge_type, dest_dict, source_dict) => {
   return result
 }
 
-converter._scalar = (name, type_, mode, description) => {
-  const bigquery_type = JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT[type_]
-  if(!bigquery_type){
-    throw new SchemaError(`Invalid type given: ${type_} for '${name}'`)
-  }
-
+converter._scalar = (name, type, mode, description) => {
   const result = {
     name: name,
-    type: bigquery_type,
+    type: type,
     mode: mode
   }
 
@@ -171,21 +165,30 @@ converter._object = (name, node, mode) => {
   return result
 }
 
-converter._simple = (name, type_, node, mode) => {
-  if(type_ === 'array'){
+converter._bigQueryType = (node, type) => {
+  // handle string formats
+  let actualType = type
+  const format = node['format']
+  if(type === 'string' && ['date-time', 'date'].includes(format)){
+    actualType = format
+  }
+  const bqType = JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT[actualType]
+  if(!bqType){
+    throw new SchemaError(`Invalid type given: ${type}`, node)
+  }
+  return bqType
+}
+
+converter._simple = (name, type, node, mode) => {
+  if(type === 'array'){
     return converter._array(name, node)
   }
-  if(type_ === 'object'){
+  if(type === 'object'){
     return converter._object(name, node, mode)
   }
 
-  let actual_type = type_
-  const format_ = node['format']
-
-  if(type_ === 'string' && format_ === 'date-time' ){
-    actual_type = format_
-  }
-  return converter._scalar(name, actual_type, mode, node['description'])
+  const bqType = converter._bigQueryType(node, type)
+  return converter._scalar(name, bqType, mode, node['description'])
 }
 
 converter._visit = (name, node, mode='NULLABLE') => {

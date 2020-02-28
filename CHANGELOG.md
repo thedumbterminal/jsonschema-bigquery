@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.2.0 (27/02/2020)
+
+* Now supports DATE columns.
+* Simplified custom error class.
+
 ## v3.1.1 (07/08/2019)
 
 * Logging now sent to STDERR.

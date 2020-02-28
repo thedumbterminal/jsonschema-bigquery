@@ -18,12 +18,15 @@ describe('converter', () => {
     })
   })
 
-  describe('_scalar()', () => {
+  describe('_bigQueryType()', () => {
     context('with an unknown type', () => {
       it('throws an error', () => {
         assert.throws(() => {
-          converter._scalar('a_name', undefined, 'NULLABLE', 'a description')
-        }, /Invalid type given: undefined for 'a_name'/)
+          const node = {
+            type: 'foo'
+          }
+          converter._bigQueryType(node, 'foo')
+        }, /SchemaError: Invalid type given: foo/)
       })
     })
   })
