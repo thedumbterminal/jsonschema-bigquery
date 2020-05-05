@@ -64,6 +64,11 @@ jsbq.run = async () => {
       type: 'boolean',
       default: false
     },
+    continueOnError: {
+      describe: 'boolean, if error in json schema, skip element in big query schema and continue.',
+      type: 'boolean',
+      default:false
+    },
     debug: {
       describe: 'Enable debug logging',
       type: 'boolean',
@@ -79,7 +84,8 @@ jsbq.run = async () => {
 
   const schemaData = await readFile(argv.j)
   const options = {
-    preventAdditionalObjectProperties: argv.preventAdditionalObjectProperties
+    preventAdditionalObjectProperties: argv.preventAdditionalObjectProperties,
+    continueOnError: argv.continueOnError
   }
   const jsonSchema = JSON.parse(schemaData)
   logger.debug('Input schema: ', jsonSchema)

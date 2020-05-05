@@ -159,6 +159,38 @@ describe('converter', () => {
         }, /Record fields must have one or more child fields/)
       })
     })
+
+    context('with no properties continueOnError', () => {
+      beforeEach(() => {
+        converter._options = {
+          continueOnError: true
+        }
+      })
+
+      it('does not allow objects to not have properties defined', () => {
+        
+        assert.doesNotThrow(() => {
+          converter._object('test', {}, 'NULLABLE')
+        }, /No properties defined for object/)
+      })
+    })
+
+    context('with zero properties continueOnError', () => {
+      beforeEach(() => {
+        converter._options = {
+          continueOnError: true
+        }
+      })
+
+      it('does not allow objects to have zero properties defined', () => {
+        const node = {
+          properties: {}
+        }
+        assert.doesNotThrow(() => {
+          converter._object('test', node, 'NULLABLE')
+        }, /Record fields must have one or more child fields/)
+      })
+    })
   })
 
   describe('run()', () => {
