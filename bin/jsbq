@@ -47,7 +47,7 @@ jsbq.run = async () => {
   const readFile = promisify(fs.readFile)
 
   const argv = require('yargs')
-  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file> --preventAdditionalObjectProperties')
+  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file> --preventAdditionalObjectProperties --continueOnError')
   .options({
     j: {
       describe: 'JSON schema file',

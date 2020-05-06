@@ -136,7 +136,7 @@ converter._array = (name, node) => {
 
 converter._object = (name, node, mode) => {
 
-  let result = {}
+  let result
 
   try {
     if (node.additionalProperties !== false && converter._options.preventAdditionalObjectProperties) {
@@ -151,9 +151,14 @@ converter._object = (name, node, mode) => {
     const required_properties = node.required || []
     const properties = node.properties
 
-    const fields = Object.keys(properties).map( key => {
+    let fields = Object.keys(properties).map( key => {
       const required = required_properties.includes(key) ? 'REQUIRED' : 'NULLABLE'
       return converter._visit(key,properties[key], required)
+    })
+
+    //remove empty fields
+    fields = fields.filter(function (field) {
+      return field != null
     })
 
     result = {
