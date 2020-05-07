@@ -222,7 +222,8 @@ converter._visit = (name, node, mode='NULLABLE') => {
     if(non_null_types.length > 1){
       throw new SchemaError('Union type not supported', node)
     }
-    if(type_.includes('null')){
+    //When mode is REPEATED, we want to leave it, even if it is NULLABLE
+    if(type_.includes('null') && actual_mode !== 'REPEATED' ){
       actual_mode = 'NULLABLE'
     }
     type_ = non_null_types[0]
