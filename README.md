@@ -20,7 +20,7 @@ Note that some features involve bespoke interpretation of schema details suited 
 
 ## Consume
 
-    jsbq -p <gbq project> -d <gbq dataset> -j <json schema file> --preventAdditionalObjectProperties
+    jsbq -p <gbq project> -d <gbq dataset> -j <json schema file> --preventAdditionalObjectProperties --continueOnError
 
 For embedded usage the following will allow and support runtime schema conversion and table maintenance:
 
@@ -33,11 +33,13 @@ Please ensure that the input JSON schema is dereferenced so that all external re
 
 ```
 {
-  preventAdditionalObjectProperties: true
+  preventAdditionalObjectProperties: true,
+  continueOnError: true
 }
 ```
 
 * `preventAdditionalObjectProperties` - boolean, check for additional object properties in schemas.
+* `continueOnError` - boolean, continues conversion if problem json is encountered.  Problems will be excluded from resulting schema.
 
 ## Test
 

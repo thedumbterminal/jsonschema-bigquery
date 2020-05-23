@@ -135,33 +135,49 @@ converter._array = (name, node) => {
 }
 
 converter._object = (name, node, mode) => {
-  if (node.additionalProperties !== false && converter._options.preventAdditionalObjectProperties) {
-    throw new SchemaError('"object" type properties must have an \'"additionalProperties": false\' property', node)
-  }
-  if(!_.isPlainObject(node.properties)){
-    throw new SchemaError('No properties defined for object', node)
-  }
-  if(Object.keys(node.properties).length === 0){
-    throw new SchemaError('Record fields must have one or more child fields', node)
-  }
-  const required_properties = node.required || []
-  const properties = node.properties
 
-  const fields = Object.keys(properties).map( key => {
-    const required = required_properties.includes(key) ? 'REQUIRED' : 'NULLABLE'
-    return converter._visit(key,properties[key], required)
-  })
+  let result
 
-  const result = {
-    name: name,
-    type: 'RECORD',
-    mode: mode,
-    fields: fields
+  try {
+    if (node.additionalProperties !== false && converter._options.preventAdditionalObjectProperties) {
+      throw new SchemaError('"object" type properties must have an \'"additionalProperties": false\' property', node)
+    }
+    if(!_.isPlainObject(node.properties)){
+      throw new SchemaError('No properties defined for object', node)
+    }
+    if(Object.keys(node.properties).length === 0){
+      throw new SchemaError('Record fields must have one or more child fields', node)
+    }
+    const required_properties = node.required || []
+    const properties = node.properties
+
+    let fields = Object.keys(properties).map( key => {
+      const required = required_properties.includes(key) ? 'REQUIRED' : 'NULLABLE'
+      return converter._visit(key,properties[key], required)
+    })
+
+    //remove empty fields
+    fields = fields.filter(function (field) {
+      return field != null
+    })
+
+    result = {
+      name: name,
+      type: 'RECORD',
+      mode: mode,
+      fields: fields
+    }
+
+    if(node.description){
+      result.description = node.description
+    }
+  }
+  catch (e) {
+    if(!converter._options.continueOnError) {
+      throw(e)
+    } 
   }
 
-  if(node.description){
-    result.description = node.description
-  }
   return result
 }
 
@@ -206,7 +222,8 @@ converter._visit = (name, node, mode='NULLABLE') => {
     if(non_null_types.length > 1){
       throw new SchemaError('Union type not supported', node)
     }
-    if(type_.includes('null')){
+    //When mode is REPEATED, we want to leave it, even if it is NULLABLE
+    if(type_.includes('null') && actual_mode !== 'REPEATED' ){
       actual_mode = 'NULLABLE'
     }
     type_ = non_null_types[0]
