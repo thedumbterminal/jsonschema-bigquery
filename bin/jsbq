@@ -67,7 +67,7 @@ jsbq.run = async () => {
     continueOnError: {
       describe: 'boolean, if error in json schema, skip element in big query schema and continue.',
       type: 'boolean',
-      default:false
+      default: false
     },
     debug: {
       describe: 'Enable debug logging',

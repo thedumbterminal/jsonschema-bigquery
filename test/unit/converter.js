@@ -1,7 +1,7 @@
 const converter = require('../../src/converter')
 const assert = require('assert')
 
-describe('converter', () => {
+describe('converter unit', () => {
   describe('_visit()', () => {
     context('when multiple types are given', () => {
       it('throws an error', () => {

@@ -1,6 +1,7 @@
 const converter = module.exports = {}
 const _ = require('lodash')
 const { SchemaError } = require('./errors')
+const { logger } = require('./log')
 
 const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   boolean: 'BOOLEAN',
@@ -156,7 +157,7 @@ converter._object = (name, node, mode) => {
       return converter._visit(key,properties[key], required)
     })
 
-    //remove empty fields
+    // remove empty fields
     fields = fields.filter(function (field) {
       return field != null
     })
@@ -173,9 +174,10 @@ converter._object = (name, node, mode) => {
     }
   }
   catch (e) {
-    if(!converter._options.continueOnError) {
+    if(!converter._options.continueOnError){
       throw(e)
-    } 
+    }
+    logger.warn(e)
   }
 
   return result
@@ -222,7 +224,7 @@ converter._visit = (name, node, mode='NULLABLE') => {
     if(non_null_types.length > 1){
       throw new SchemaError('Union type not supported', node)
     }
-    //When mode is REPEATED, we want to leave it, even if it is NULLABLE
+    // When mode is REPEATED, we want to leave it, even if it is NULLABLE
     if(type_.includes('null') && actual_mode !== 'REPEATED' ){
       actual_mode = 'NULLABLE'
     }
