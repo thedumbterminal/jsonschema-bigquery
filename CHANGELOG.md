@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.2.1 (23/05/2020)
+
+* Updated to node 12, and updated dependencies.
+
 ## v3.2.0 (27/02/2020)
 
 * Now supports DATE columns.
