@@ -1,7 +1,7 @@
 # jsonschema-bigquery
 
 [![npm](https://img.shields.io/npm/v/jsonschema-bigquery.svg)](https://www.npmjs.com/package/jsonschema-bigquery)
-[![Build Status](https://travis-ci.org/thedumbterminal/jsonschema-bigquery.svg?branch=master)](https://travis-ci.org/thedumbterminal/jsonschema-bigquery)
+[![Build Status](https://travis-ci.com/thedumbterminal/jsonschema-bigquery.svg?branch=master)](https://travis-ci.com/github/thedumbterminal/jsonschema-bigquery)
 
 Convert JSON schema to Google BigQuery schema
 
