@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.3.0 (23/05/2020)
+
+* Schema problems can now be ignored, with warnings shown.
+
 ## v3.2.1 (23/05/2020)
 
 * Updated to node 12, and updated dependencies.
