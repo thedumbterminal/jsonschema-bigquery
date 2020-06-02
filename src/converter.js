@@ -17,15 +17,9 @@ const OFS = ['allOf', 'anyOf', 'oneOf']
 converter._merge_property = (merge_type, property_name, destination_value, source_value) => {
   // Merges two properties.
   let destination_list
-  if(destination_value === undefined && source_value === undefined){
-    return undefined
-  }
-  if(destination_value === undefined){
-    return source_value
-  }
-  if(source_value === undefined){
-    return destination_value
-  }
+  if(destination_value === undefined && source_value === undefined) return undefined
+  if(destination_value === undefined) return source_value
+  if(source_value === undefined) return destination_value
   if(typeof destination_value === 'boolean' && typeof source_value === 'boolean'){
     return destination_value && source_value
   }
@@ -45,10 +39,14 @@ converter._merge_property = (merge_type, property_name, destination_value, sourc
   }
   if(property_name === 'description'){
     destination_list.push(source_value)
-    return destination_list.join(' ')
+    return _.uniq(destination_list).join(' ')
   }
   if(property_name === 'required' && ['anyOf', 'oneOf'].includes(merge_type)){
     return destination_list.filter( v => source_list.includes(v) )
+  }
+  if(property_name === 'format'){
+    // if we have multiple formats we have to remove them all
+    return _.uniq(destination_list).length === 1 ? destination_list.shift() : ''
   }
   destination_list.push(...source_list.filter(v=>!destination_list.includes(v)))
   return destination_list

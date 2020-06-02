@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.4.0 (02/06/2020)
+
+* Date formats now supported in `OneOf` or `AnyOf`.
+* Repeated descriptions in `OneOf` or `AnyOf` are no longer duplicated.
+
 ## v3.3.0 (23/05/2020)
 
 * Schema problems can now be ignored, with warnings shown.
