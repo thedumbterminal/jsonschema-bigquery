@@ -1,0 +1,28 @@
+{
+  "schema": {
+    "fields": [
+      {
+       "fields": [
+         {
+           "mode": "NULLABLE",
+           "name": "first_name",
+           "type": "STRING"
+         },
+         {
+           "mode": "NULLABLE",
+           "name": "created",
+           "type": "TIMESTAMP"
+         },
+         {
+           "mode": "NULLABLE",
+           "name": "last_name",
+           "type": "STRING"
+         }
+       ],
+       "mode": "NULLABLE",
+       "name": "name",
+       "type": "RECORD"
+      }
+    ]
+  }
+}

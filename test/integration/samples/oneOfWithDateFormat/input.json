@@ -1,0 +1,35 @@
+{
+  "id": "http://yourdomain.com/schemas/myschema.json",
+  "type": "object",
+  "properties": {
+    "name": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "first_name": {
+              "type": "string"
+            },
+            "created": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "last_name": {
+              "type": "string"
+            },
+            "created": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

@@ -3,7 +3,11 @@
     "node": true,
     "mocha": true
   },
-  "extends": "eslint:recommended",
+  "plugins": [
+  ],
+  "extends": [
+    "eslint:recommended"
+  ],
   "globals": {
   },
   "parserOptions": {
