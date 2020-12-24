@@ -1,5 +1,5 @@
 const gbq = module.exports = {}
-const BigQuery = require('@google-cloud/bigquery')
+const { BigQuery } = require('@google-cloud/bigquery')
 const { logger } = require('./log')
 
 gbq.createTable = async (projectId, datasetId, tableId, schema) => {
