@@ -1,5 +1,10 @@
 # Changelog
 
+## v4.0.0 (24/12/2020)
+
+* Dropped support for node 8.
+* Updated dependencies.
+
 ## v3.4.0 (02/06/2020)
 
 * Date formats now supported in `OneOf` or `AnyOf`.
