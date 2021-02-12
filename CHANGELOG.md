@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.0.1 (12/02/2021)
+
+* Support more formats for table ID utility.
+
 ## v4.0.0 (24/12/2020)
 
 * Dropped support for node 8.
