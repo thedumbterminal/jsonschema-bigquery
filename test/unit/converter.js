@@ -208,4 +208,14 @@ describe('converter unit', () => {
       })
     })
   })
+
+  describe('_scalar()', () => {
+    context('with an invalid field', () => {
+      it('throws an error', () => {
+        assert.throws(() => {
+          converter._scalar('123test', 'STRING', 'NULLABLE')
+        }, /Invalid field name: 123test/)
+      })
+    })
+  })
 })

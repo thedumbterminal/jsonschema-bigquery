@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.1.0 (27/09/2021)
+
+* Now checks for field name format.
+
 ## v4.0.1 (12/02/2021)
 
 * Support more formats for table ID utility.
