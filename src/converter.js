@@ -14,6 +14,8 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
 
 const OFS = ['allOf', 'anyOf', 'oneOf']
 
+const BIGQUERY_FIELD_NAME_REGEXP = /^[a-z_][a-z0-9_]+$/i
+
 converter._merge_property = (merge_type, property_name, destination_value, source_value) => {
   // Merges two properties.
   let destination_list
@@ -112,10 +114,14 @@ converter._merge_dicts = (merge_type, dest_dict, source_dict) => {
 }
 
 converter._scalar = (name, type, mode, description) => {
+	if(!name.match(BIGQUERY_FIELD_NAME_REGEXP)){
+		throw new SchemaError(`Invalid field name: ${name}`)
+	}
+
   const result = {
-    name: name,
-    type: type,
-    mode: mode
+    name,
+    type,
+    mode
   }
 
   if (description) {
@@ -160,16 +166,8 @@ converter._object = (name, node, mode) => {
       return field != null
     })
 
-    result = {
-      name: name,
-      type: 'RECORD',
-      mode: mode,
-      fields: fields
-    }
-
-    if(node.description){
-      result.description = node.description
-    }
+		result = converter._scalar(name, 'RECORD', mode, node.description)
+		result.fields = fields
   }
   catch (e) {
     if(!converter._options.continueOnError){
