@@ -1,5 +1,9 @@
 # Changelog
 
+## v5.0.0 (21/12/2021)
+
+* Updated converter to generate numeric instead of float for number type
+
 ## v4.1.0 (27/09/2021)
 
 * Now checks for field name format.
