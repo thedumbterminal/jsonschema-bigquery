@@ -9,7 +9,8 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   integer: 'INTEGER',
   number: 'NUMERIC',
   string: 'STRING',
-  date: 'DATE'
+  date: 'DATE',
+  time: 'TIME'
 }
 
 const OFS = ['allOf', 'anyOf', 'oneOf']
@@ -183,7 +184,7 @@ converter._bigQueryType = (node, type) => {
   // handle string formats
   let actualType = type
   const format = node['format']
-  if(type === 'string' && ['date-time', 'date'].includes(format)){
+  if(type === 'string' && ['date-time', 'date', 'time'].includes(format)){
     actualType = format
   }
   const bqType = JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT[actualType]

@@ -1,0 +1,12 @@
+{
+	"id": "http://yourdomain.com/schemas/myschema.json",
+	"description": "Example description",
+	"type": "object",
+	"properties": {
+		"modified": {
+			"type": "string",
+			"format": "time"
+		}
+	},
+	"additionalProperties": false
+}

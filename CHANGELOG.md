@@ -1,9 +1,11 @@
 # Changelog
 
-## v5.0.0 (21/12/2021)
+## v5.0.0 (30/12/2021)
 
 * Updated converter to generate numeric instead of float for number type.
 * Fixed field name validation.
+* Now supports TIME columns.
+* Updated to node 16, and updated dependencies.
 
 ## v4.1.0 (27/09/2021)
 
