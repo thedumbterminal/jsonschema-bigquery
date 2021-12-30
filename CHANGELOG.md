@@ -2,7 +2,8 @@
 
 ## v5.0.0 (21/12/2021)
 
-* Updated converter to generate numeric instead of float for number type
+* Updated converter to generate numeric instead of float for number type.
+* Fixed field name validation.
 
 ## v4.1.0 (27/09/2021)
 

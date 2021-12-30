@@ -210,16 +210,32 @@ describe('converter unit', () => {
   })
 
   describe('_scalar()', () => {
-    context('with an invalid field', () => {
+    context('with a field beginning with a number', () => {
       it('throws an error', () => {
         assert.throws(() => {
           converter._scalar('123test', 'STRING', 'NULLABLE')
         }, /Invalid field name: 123test/)
       })
     })
-  })
 
-  describe('_scalar()', () => {
+    context('with a field containing non alphanumeric characters', () => {
+      it('throws an error', () => {
+        assert.throws(() => {
+          converter._scalar('test!', 'STRING', 'NULLABLE')
+        }, /Invalid field name: test!/)
+      })
+    })
+
+    context('with an single character field', () => {
+      it('returns a bigquery field object', () => {
+        assert.deepStrictEqual(converter._scalar('t', 'STRING', 'NULLABLE'), {
+          mode: 'NULLABLE',
+          name: 't',
+          type: 'STRING'
+        })
+      })
+    })
+
     context('with a valid field', () => {
       it('returns a bigquery field object', () => {
         assert.deepStrictEqual(converter._scalar('test123', 'STRING', 'NULLABLE'), {

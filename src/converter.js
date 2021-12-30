@@ -14,7 +14,7 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
 
 const OFS = ['allOf', 'anyOf', 'oneOf']
 
-const BIGQUERY_FIELD_NAME_REGEXP = /^[a-z_][a-z0-9_]+$/i
+const BIGQUERY_FIELD_NAME_REGEXP = /^[a-z_]([a-z0-9_]+|)$/i
 
 converter._merge_property = (merge_type, property_name, destination_value, source_value) => {
   // Merges two properties.
