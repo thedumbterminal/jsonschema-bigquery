@@ -1,5 +1,10 @@
 # Changelog
 
+## v5.0.1 (04/07/2022)
+
+* JSBQ CLI now supports draft-7+ schemas
+* Updated dependencies
+
 ## v5.0.0 (30/12/2021)
 
 * Updated converter to generate numeric instead of float for number type.

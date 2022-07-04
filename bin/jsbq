@@ -19,8 +19,9 @@ jsbq.process = async (project, datasetName, jsonSchema, options) => {
     return logger.info('Skipping table operations')
   }
 
-  logger.info('Extracting table name from schema...')
-  const tableName = utils.get_table_id(jsonSchema.id)
+  const schemaId = jsonSchema.$id || jsonSchema.id
+  logger.info('Extracting table name from schema ID:', schemaId)
+  const tableName = utils.get_table_id(schemaId)
   logger.info('Table name:', tableName)
 
   logger.info('Setting table options...')
