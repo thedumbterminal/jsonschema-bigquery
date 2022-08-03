@@ -118,10 +118,15 @@ describe('converter unit', () => {
     })
 
     context('with no properties', () => {
-      it('does not allow objects to not have properties defined', () => {
-        assert.throws(() => {
-          converter._object('test', {}, 'NULLABLE')
-        }, /No properties defined for object/)
+      it('converts to JSON when properties not defined', () => {
+        const expected = {
+          mode: 'NULLABLE',
+          name: 'test',
+          type: 'JSON',
+        }
+        const result = converter._object('test', {}, 'NULLABLE')
+
+        assert.deepStrictEqual(result, expected)
       })
     })
 
