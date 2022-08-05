@@ -1,22 +1,18 @@
 {
-    "env": {
-        "node": true,
-        "es2022": true,
-        "mocha": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:mocha/recommended",
-      "standard"
-    ],
-    "parserOptions": {
-        "ecmaVersion": "latest"
-    },
-    "rules": {
-      "mocha/no-mocha-arrows": 0,
-      "comma-dangle": 0
-    },
-    "plugins": [
-        "mocha"
-    ]
+  "env": {
+    "node": true,
+    "es2022": true,
+    "mocha": true
+  },
+  "extends": ["eslint:recommended", "plugin:mocha/recommended", "standard"],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "mocha/no-mocha-arrows": 0,
+    "comma-dangle": 0,
+    "space-before-function-paren": 0,
+    "camelcase": 0
+  },
+  "plugins": ["mocha"]
 }

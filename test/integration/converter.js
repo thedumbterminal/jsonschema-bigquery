@@ -12,7 +12,8 @@ describe('converter integration', () => {
       testDirs = fs.readdirSync(sampleDir)
     })
 
-    testDirs.forEach((dir) => { // eslint-disable-line mocha/no-setup-in-describe
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    testDirs.forEach((dir) => {
       describe(dir, () => {
         let expected
         let result
@@ -39,7 +40,8 @@ describe('converter integration', () => {
       testDirs = fs.readdirSync(sampleDir)
     })
 
-    testDirs.forEach((dir) => { // eslint-disable-line mocha/no-setup-in-describe
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    testDirs.forEach((dir) => {
       describe(dir, () => {
         let expected
         let result

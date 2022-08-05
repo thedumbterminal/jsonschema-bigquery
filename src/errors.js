@@ -1,7 +1,7 @@
 const utils = require('./utils')
 
 class SchemaError extends Error {
-  constructor (message, node) {
+  constructor(message, node) {
     super(message)
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)

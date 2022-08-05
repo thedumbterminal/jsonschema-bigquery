@@ -25,7 +25,9 @@ converter._merge_property = (
 ) => {
   // Merges two properties.
   let destination_list
-  if (destination_value === undefined && source_value === undefined) { return undefined }
+  if (destination_value === undefined && source_value === undefined) {
+    return undefined
+  }
   if (destination_value === undefined) return source_value
   if (source_value === undefined) return destination_value
   if (
