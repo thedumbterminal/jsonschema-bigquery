@@ -6,10 +6,10 @@ describe('converter integration', () => {
   describe('default options', () => {
     let sampleDir
     let testDirs
-    
+
     before(() => {
       sampleDir = './test/integration/samples'
-      testDirs = fs.readdirSync(sampleDir)      
+      testDirs = fs.readdirSync(sampleDir)
     })
 
     testDirs.forEach((dir) => { // eslint-disable-line mocha/no-setup-in-describe
@@ -33,10 +33,10 @@ describe('converter integration', () => {
   describe('continueOnError option', () => {
     let sampleDir
     let testDirs
-    
+
     before(() => {
       sampleDir = './test/integration/continueOnError'
-      testDirs = fs.readdirSync(sampleDir)      
+      testDirs = fs.readdirSync(sampleDir)
     })
 
     testDirs.forEach((dir) => { // eslint-disable-line mocha/no-setup-in-describe

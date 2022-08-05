@@ -25,8 +25,7 @@ converter._merge_property = (
 ) => {
   // Merges two properties.
   let destination_list
-  if (destination_value === undefined && source_value === undefined)
-    return undefined
+  if (destination_value === undefined && source_value === undefined) { return undefined }
   if (destination_value === undefined) return source_value
   if (source_value === undefined) return destination_value
   if (
@@ -157,9 +156,9 @@ converter._scalar = (name, type, mode, description) => {
 }
 
 converter._array = (name, node) => {
-  let items_with_description = converter._deepCopy(node['items'])
+  const items_with_description = converter._deepCopy(node.items)
   if (_.has(items_with_description, 'description')) {
-    items_with_description['description'] = node['description']
+    items_with_description.description = node.description
   }
   return converter._visit(name, items_with_description, 'REPEATED')
 }
@@ -216,7 +215,7 @@ converter._object = (name, node, mode) => {
 converter._bigQueryType = (node, type) => {
   // handle string formats
   let actualType = type
-  const format = node['format']
+  const format = node.format
   if (type === 'string' && ['date-time', 'date', 'time'].includes(format)) {
     actualType = format
   }
@@ -236,7 +235,7 @@ converter._simple = (name, type, node, mode) => {
   }
 
   const bqType = converter._bigQueryType(node, type)
-  return converter._scalar(name, bqType, mode, node['description'])
+  return converter._scalar(name, bqType, mode, node.description)
 }
 
 converter._visit = (name, node, mode = 'NULLABLE') => {
@@ -247,7 +246,7 @@ converter._visit = (name, node, mode = 'NULLABLE') => {
       delete merged_node[x_of]
     }
   }
-  let type_ = merged_node['type']
+  let type_ = merged_node.type
   let actual_mode = mode
   if (Array.isArray(type_)) {
     const non_null_types = type_.filter((scalar_type) => scalar_type !== 'null')
