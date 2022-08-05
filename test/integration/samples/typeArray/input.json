@@ -1,23 +1,15 @@
 {
-	"id": "http://yourdomain.com/schemas/myschema.json",
-	"description": "Example description",
-	"type": "object",
-	"properties": {
-		"first_name": {
-			"type": [
-				"string",
-				"null"
-			]
-		},
-		"last_name": {
-			"type": [
-				"string",
-				"null"
-			]
-		}
-	},
-	"required": [
-		"first_name"
-	],
-	"additionalProperties": false
+  "id": "http://yourdomain.com/schemas/myschema.json",
+  "description": "Example description",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": ["string", "null"]
+    },
+    "last_name": {
+      "type": ["string", "null"]
+    }
+  },
+  "required": ["first_name"],
+  "additionalProperties": false
 }

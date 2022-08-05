@@ -3,16 +3,11 @@
     "node": true,
     "mocha": true
   },
-  "plugins": [
-  ],
-  "extends": [
-    "eslint:recommended"
-  ],
-  "globals": {
-  },
+  "plugins": [],
+  "extends": ["eslint:recommended"],
+  "globals": {},
   "parserOptions": {
     "ecmaVersion": 8
   },
-  "rules": {
-  }
+  "rules": {}
 }

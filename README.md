@@ -38,8 +38,8 @@ Please ensure that the input JSON schema is dereferenced so that all external re
 }
 ```
 
-* `preventAdditionalObjectProperties` - boolean, check for additional object properties in schemas.
-* `continueOnError` - boolean, continues conversion if problem JSON is encountered. Problems will be excluded from resulting schema.
+- `preventAdditionalObjectProperties` - boolean, check for additional object properties in schemas.
+- `continueOnError` - boolean, continues conversion if problem JSON is encountered. Problems will be excluded from resulting schema.
 
 ## Test
 

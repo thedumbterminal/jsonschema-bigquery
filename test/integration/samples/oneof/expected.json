@@ -1,31 +1,31 @@
 {
-	"schema": {
-		"fields": [
-			{
-				"name": "tags",
-				"mode": "REPEATED",
-				"type": "RECORD",
-				"fields": [
-					{
-						"name": "name",
-						"description": "The name of the tag that you want to include",
-						"type": "STRING",
-						"mode": "REQUIRED"
-					},
-					{
-						"name": "string",
-						"description": "A string type data point for the tag",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "number",
-						"description": "A integer type data point for the tag",
-						"type": "INTEGER",
-						"mode": "NULLABLE"
-					}
-				]
-			}
-		]
-	}
+  "schema": {
+    "fields": [
+      {
+        "name": "tags",
+        "mode": "REPEATED",
+        "type": "RECORD",
+        "fields": [
+          {
+            "name": "name",
+            "description": "The name of the tag that you want to include",
+            "type": "STRING",
+            "mode": "REQUIRED"
+          },
+          {
+            "name": "string",
+            "description": "A string type data point for the tag",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "number",
+            "description": "A integer type data point for the tag",
+            "type": "INTEGER",
+            "mode": "NULLABLE"
+          }
+        ]
+      }
+    ]
+  }
 }

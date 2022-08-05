@@ -8,15 +8,11 @@
           "oneOf": [
             {
               "type": "string",
-              "enum": [
-                "sweets"
-              ]
+              "enum": ["sweets"]
             },
             {
               "type": "string",
-              "enum": [
-                "shoes"
-              ]
+              "enum": ["shoes"]
             }
           ]
         },

@@ -7,7 +7,8 @@
     "ci": "npm run lint && npm run coverage",
     "test": "mocha test/unit test/integration",
     "coverage": "nyc npm run test",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "bin": {
     "jsbq": "./bin/jsbq"
@@ -38,7 +39,8 @@
   "devDependencies": {
     "eslint": "^8.5.0",
     "mocha": "^10.0.0",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "prettier": "^2.7.1"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^6.0.0",

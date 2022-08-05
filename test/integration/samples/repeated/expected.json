@@ -1,11 +1,11 @@
 {
-	"schema": {
-		"fields": [
-			{
-				"name": "names",
-				"type": "STRING",
-				"mode": "REPEATED"
-			}
-		]
-	}
+  "schema": {
+    "fields": [
+      {
+        "name": "names",
+        "type": "STRING",
+        "mode": "REPEATED"
+      }
+    ]
+  }
 }

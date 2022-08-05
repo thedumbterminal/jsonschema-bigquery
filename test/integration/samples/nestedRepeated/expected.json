@@ -1,18 +1,18 @@
 {
-	"schema": {
-		"fields": [
-			{
-				"name": "names",
-				"type": "RECORD",
-				"mode": "REPEATED",
-				"fields": [
-					{
-						"name": "first",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					}
-				]
-			}
-		]
-	}
+  "schema": {
+    "fields": [
+      {
+        "name": "names",
+        "type": "RECORD",
+        "mode": "REPEATED",
+        "fields": [
+          {
+            "name": "first",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          }
+        ]
+      }
+    ]
+  }
 }

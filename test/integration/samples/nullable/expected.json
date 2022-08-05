@@ -1,16 +1,16 @@
 {
-	"schema": {
-		"fields": [
-			{
-				"name": "first_name",
-				"type": "STRING",
-				"mode": "REQUIRED"
-			},
-			{
-				"name": "last_name",
-				"type": "STRING",
-				"mode": "NULLABLE"
-			}
-		]
-	}
+  "schema": {
+    "fields": [
+      {
+        "name": "first_name",
+        "type": "STRING",
+        "mode": "REQUIRED"
+      },
+      {
+        "name": "last_name",
+        "type": "STRING",
+        "mode": "NULLABLE"
+      }
+    ]
+  }
 }

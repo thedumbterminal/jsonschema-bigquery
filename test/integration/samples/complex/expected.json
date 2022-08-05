@@ -1,23 +1,23 @@
 {
-	"schema": {
-		"fields": [
-			{
-				"name": "address",
-				"type": "RECORD",
-				"mode": "NULLABLE",
-				"fields":[
-					{
-						"name": "street_address",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "country",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					}
-				]
-			}
-		]
-	}
+  "schema": {
+    "fields": [
+      {
+        "name": "address",
+        "type": "RECORD",
+        "mode": "NULLABLE",
+        "fields": [
+          {
+            "name": "street_address",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          },
+          {
+            "name": "country",
+            "type": "STRING",
+            "mode": "NULLABLE"
+          }
+        ]
+      }
+    ]
+  }
 }
