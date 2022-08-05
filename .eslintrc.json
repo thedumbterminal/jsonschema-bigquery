@@ -1,13 +1,22 @@
 {
-  "env": {
-    "node": true,
-    "mocha": true
-  },
-  "plugins": [],
-  "extends": ["eslint:recommended"],
-  "globals": {},
-  "parserOptions": {
-    "ecmaVersion": 8
-  },
-  "rules": {}
+    "env": {
+        "node": true,
+        "es2022": true,
+        "mocha": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:mocha/recommended",
+      "standard"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+      "mocha/no-mocha-arrows": 0,
+      "comma-dangle": 0
+    },
+    "plugins": [
+        "mocha"
+    ]
 }

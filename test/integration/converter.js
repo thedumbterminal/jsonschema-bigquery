@@ -4,16 +4,22 @@ const fs = require('fs')
 
 describe('converter integration', () => {
   describe('default options', () => {
-    const sampleDir = './test/integration/samples'
-    const testDirs = fs.readdirSync(sampleDir)
+    let sampleDir
+    let testDirs
+    
+    before(() => {
+      sampleDir = './test/integration/samples'
+      testDirs = fs.readdirSync(sampleDir)      
+    })
 
-    testDirs.forEach((dir) => {
+    testDirs.forEach((dir) => { // eslint-disable-line mocha/no-setup-in-describe
       describe(dir, () => {
-        const inJson = require(`../../${sampleDir}/${dir}/input.json`)
-        const expected = require(`../../${sampleDir}/${dir}/expected.json`)
+        let expected
         let result
 
         before(() => {
+          const inJson = require(`../../${sampleDir}/${dir}/input.json`)
+          expected = require(`../../${sampleDir}/${dir}/expected.json`)
           result = converter.run(inJson, 'p', 't')
         })
 
@@ -25,20 +31,25 @@ describe('converter integration', () => {
   })
 
   describe('continueOnError option', () => {
-    const sampleDir = './test/integration/continueOnError'
-    const testDirs = fs.readdirSync(sampleDir)
+    let sampleDir
+    let testDirs
+    
+    before(() => {
+      sampleDir = './test/integration/continueOnError'
+      testDirs = fs.readdirSync(sampleDir)      
+    })
 
-    testDirs.forEach((dir) => {
+    testDirs.forEach((dir) => { // eslint-disable-line mocha/no-setup-in-describe
       describe(dir, () => {
-        const inJson = require(`../../${sampleDir}/${dir}/input.json`)
-        const expected = require(`../../${sampleDir}/${dir}/expected.json`)
-        const options = {
-          continueOnError: true,
-        }
-
+        let expected
         let result
 
         before(() => {
+          const inJson = require(`../../${sampleDir}/${dir}/input.json`)
+          expected = require(`../../${sampleDir}/${dir}/expected.json`)
+          const options = {
+            continueOnError: true,
+          }
           result = converter.run(inJson, options, 'p', 't')
         })
 
