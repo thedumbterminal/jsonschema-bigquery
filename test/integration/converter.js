@@ -4,13 +4,9 @@ const fs = require('fs')
 
 describe('converter integration', () => {
   describe('default options', () => {
-    let sampleDir
-    let testDirs
-
-    before(() => {
-      sampleDir = './test/integration/samples'
-      testDirs = fs.readdirSync(sampleDir)
-    })
+    const sampleDir = './test/integration/samples'
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    const testDirs = fs.readdirSync(sampleDir)
 
     // eslint-disable-next-line mocha/no-setup-in-describe
     testDirs.forEach((dir) => {
@@ -32,13 +28,9 @@ describe('converter integration', () => {
   })
 
   describe('continueOnError option', () => {
-    let sampleDir
-    let testDirs
-
-    before(() => {
-      sampleDir = './test/integration/continueOnError'
-      testDirs = fs.readdirSync(sampleDir)
-    })
+    const sampleDir = './test/integration/continueOnError'
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    const testDirs = fs.readdirSync(sampleDir)
 
     // eslint-disable-next-line mocha/no-setup-in-describe
     testDirs.forEach((dir) => {
