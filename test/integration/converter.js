@@ -5,16 +5,19 @@ const fs = require('fs')
 describe('converter integration', () => {
   describe('default options', () => {
     const sampleDir = './test/integration/samples'
+    // eslint-disable-next-line mocha/no-setup-in-describe
     const testDirs = fs.readdirSync(sampleDir)
 
-    testDirs.forEach(dir => {
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    testDirs.forEach((dir) => {
       describe(dir, () => {
-        const inJson = require(`../../${sampleDir}/${dir}/input.json`)
-        const expected = require(`../../${sampleDir}/${dir}/expected.json`)
+        let expected
         let result
 
         before(() => {
-          result = converter.run(inJson,'p','t')
+          const inJson = require(`../../${sampleDir}/${dir}/input.json`)
+          expected = require(`../../${sampleDir}/${dir}/expected.json`)
+          result = converter.run(inJson, 'p', 't')
         })
 
         it('converts to big query', () => {
@@ -26,26 +29,28 @@ describe('converter integration', () => {
 
   describe('continueOnError option', () => {
     const sampleDir = './test/integration/continueOnError'
+    // eslint-disable-next-line mocha/no-setup-in-describe
     const testDirs = fs.readdirSync(sampleDir)
 
-   testDirs.forEach(dir => {
-     describe(dir, () => {
-       const inJson = require(`../../${sampleDir}/${dir}/input.json`)
-       const expected = require(`../../${sampleDir}/${dir}/expected.json`)
-       const options = {
-         continueOnError: true
-       }
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    testDirs.forEach((dir) => {
+      describe(dir, () => {
+        let expected
+        let result
 
-       let result
+        before(() => {
+          const inJson = require(`../../${sampleDir}/${dir}/input.json`)
+          expected = require(`../../${sampleDir}/${dir}/expected.json`)
+          const options = {
+            continueOnError: true,
+          }
+          result = converter.run(inJson, options, 'p', 't')
+        })
 
-       before(() => {
-         result = converter.run(inJson, options, 'p','t')
-       })
-
-       it('converts to big query', () => {
-         assert.deepStrictEqual(result, expected)
-       })
-     })
-   })
+        it('converts to big query', () => {
+          assert.deepStrictEqual(result, expected)
+        })
+      })
+    })
   })
 })

@@ -7,10 +7,7 @@ describe('converter unit', () => {
       it('throws an error', () => {
         assert.throws(() => {
           const node = {
-            type: [
-              'string',
-              'boolean'
-            ]
+            type: ['string', 'boolean'],
           }
           converter._visit('test', node)
         }, /Union type not supported/)
@@ -23,7 +20,7 @@ describe('converter unit', () => {
       it('throws an error', () => {
         assert.throws(() => {
           const node = {
-            type: 'foo'
+            type: 'foo',
           }
           converter._bigQueryType(node, 'foo')
         }, /SchemaError: Invalid type given: foo/)
@@ -36,27 +33,18 @@ describe('converter unit', () => {
       it('returns the correct structure', () => {
         const source = [
           {
-            "type": "string",
-            "enum": [
-              "sweets"
-            ]
+            type: 'string',
+            enum: ['sweets'],
           },
           {
-            "type": "string",
-            "enum": [
-              "shoes"
-            ]
-          }
+            type: 'string',
+            enum: ['shoes'],
+          },
         ]
         const result = converter._merge_dicts_array('oneOf', {}, source)
         const expected = {
-          "enum": [
-            "sweets",
-            "shoes"
-          ],
-          "type": [
-            "string"
-          ]
+          enum: ['sweets', 'shoes'],
+          type: ['string'],
         }
         assert.deepStrictEqual(result, expected)
       })
@@ -68,36 +56,24 @@ describe('converter unit', () => {
           {
             oneOf: [
               {
-                "type": "string",
-                "enum": [
-                  "sweets"
-                ]
+                type: 'string',
+                enum: ['sweets'],
               },
               {
-                "type": "string",
-                "enum": [
-                  "shoes"
-                ]
-              }
-            ]
+                type: 'string',
+                enum: ['shoes'],
+              },
+            ],
           },
           {
-            "type": "string",
-            "enum": [
-              "bag"
-            ]
-          }
+            type: 'string',
+            enum: ['bag'],
+          },
         ]
         const result = converter._merge_dicts_array('oneOf', {}, source)
         const expected = {
-          "enum": [
-            "sweets",
-            "shoes",
-            "bag"
-          ],
-          "type": [
-            "string"
-          ]
+          enum: ['sweets', 'shoes', 'bag'],
+          type: ['string'],
         }
         assert.deepStrictEqual(result, expected)
       })
@@ -114,9 +90,9 @@ describe('converter unit', () => {
         const node = {
           properties: {
             name: {
-              type: 'string'
-            }
-          }
+              type: 'string',
+            },
+          },
         }
         assert.doesNotThrow(() => {
           converter._object('test', node, 'NULLABLE')
@@ -127,13 +103,13 @@ describe('converter unit', () => {
     context('with the "ignoreAdditional" option', () => {
       beforeEach(() => {
         converter._options = {
-          preventAdditionalObjectProperties: true
+          preventAdditionalObjectProperties: true,
         }
       })
 
       it('does not allow additional properties', () => {
         const node = {
-          properties: {}
+          properties: {},
         }
         assert.throws(() => {
           converter._object('test', node, 'NULLABLE')
@@ -152,7 +128,7 @@ describe('converter unit', () => {
     context('with zero properties', () => {
       it('does not allow objects to have zero properties defined', () => {
         const node = {
-          properties: {}
+          properties: {},
         }
         assert.throws(() => {
           converter._object('test', node, 'NULLABLE')
@@ -163,12 +139,11 @@ describe('converter unit', () => {
     context('with no properties continueOnError', () => {
       beforeEach(() => {
         converter._options = {
-          continueOnError: true
+          continueOnError: true,
         }
       })
 
       it('does not allow objects to not have properties defined', () => {
-        
         assert.doesNotThrow(() => {
           converter._object('test', {}, 'NULLABLE')
         }, /No properties defined for object/)
@@ -178,13 +153,13 @@ describe('converter unit', () => {
     context('with zero properties continueOnError', () => {
       beforeEach(() => {
         converter._options = {
-          continueOnError: true
+          continueOnError: true,
         }
       })
 
       it('does not allow objects to have zero properties defined', () => {
         const node = {
-          properties: {}
+          properties: {},
         }
         assert.doesNotThrow(() => {
           converter._object('test', node, 'NULLABLE')
@@ -195,16 +170,19 @@ describe('converter unit', () => {
 
   describe('run()', () => {
     beforeEach(() => {
-      converter.run({
-        type: 'boolean'
-      }, {
-        option: true
-      })
+      converter.run(
+        {
+          type: 'boolean',
+        },
+        {
+          option: true,
+        }
+      )
     })
 
     it('sets given options', () => {
       assert.deepStrictEqual(converter._options, {
-        option: true
+        option: true,
       })
     })
   })
@@ -231,18 +209,21 @@ describe('converter unit', () => {
         assert.deepStrictEqual(converter._scalar('t', 'STRING', 'NULLABLE'), {
           mode: 'NULLABLE',
           name: 't',
-          type: 'STRING'
+          type: 'STRING',
         })
       })
     })
 
     context('with a valid field', () => {
       it('returns a bigquery field object', () => {
-        assert.deepStrictEqual(converter._scalar('test123', 'STRING', 'NULLABLE'), {
-          mode: 'NULLABLE',
-          name: 'test123',
-          type: 'STRING'
-        })
+        assert.deepStrictEqual(
+          converter._scalar('test123', 'STRING', 'NULLABLE'),
+          {
+            mode: 'NULLABLE',
+            name: 'test123',
+            type: 'STRING',
+          }
+        )
       })
     })
   })

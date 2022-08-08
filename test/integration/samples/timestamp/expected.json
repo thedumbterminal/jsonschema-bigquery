@@ -1,11 +1,11 @@
 {
-	"schema": {
-		"fields": [
-			{
-				"name": "modified",
-				"type": "TIMESTAMP",
-				"mode": "NULLABLE"
-			}
-		]
-	}
+  "schema": {
+    "fields": [
+      {
+        "name": "modified",
+        "type": "TIMESTAMP",
+        "mode": "NULLABLE"
+      }
+    ]
+  }
 }

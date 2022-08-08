@@ -1,14 +1,14 @@
 {
-	"id": "http://yourdomain.com/schemas/myschema.json",
-	"description": "Example description",
-	"type": "object",
-	"properties": {
-		"names": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		}
-	},
-	"additionalProperties": false
+  "id": "http://yourdomain.com/schemas/myschema.json",
+  "description": "Example description",
+  "type": "object",
+  "properties": {
+    "names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
 }

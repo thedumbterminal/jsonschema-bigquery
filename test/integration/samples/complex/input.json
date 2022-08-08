@@ -1,20 +1,20 @@
 {
-	"id": "http://yourdomain.com/schemas/myschema.json",
-	"description": "Complex example",
-	"type": "object",
-	"properties": {
-		"address": {
-			"type": "object",
-			"properties": {
-				"street_address": {
-					"type": "string"
-				},
-				"country": {
-					"type" : "string"
-				}
-			},
-			"additionalProperties": false
-		}
-	},
-	"additionalProperties": false
+  "id": "http://yourdomain.com/schemas/myschema.json",
+  "description": "Complex example",
+  "type": "object",
+  "properties": {
+    "address": {
+      "type": "object",
+      "properties": {
+        "street_address": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
 }

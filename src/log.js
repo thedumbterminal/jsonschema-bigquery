@@ -1,13 +1,6 @@
-const log = module.exports = {}
+const log = (module.exports = {})
 const log4js = require('log4js')
 const utils = require('./utils')
-
-log.streamPattern = () => {
-  if (!process.stdout.isTTY) {
-    return '%d %p %c %x{plain}%x{schema}'
-  }
-  return '%[%d %p %c%] %x{plain}%x{schema}'
-}
 
 log4js.configure({
   appenders: {
@@ -15,7 +8,7 @@ log4js.configure({
       type: 'stderr',
       layout: {
         type: 'pattern',
-        pattern: log.streamPattern(),
+        pattern: '%[%d %p %c%] %x{plain}%x{schema}',
         tokens: {
           plain: (logEvent) => logEvent.data[0],
           schema: (logEvent) => {
@@ -23,17 +16,17 @@ log4js.configure({
               return ''
             }
             return '\n' + utils.inspector(logEvent.data[1])
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
   },
   categories: {
     default: {
       appenders: ['err'],
-      level: 'ERROR'
-    }
-  }
+      level: 'ERROR',
+    },
+  },
 })
 
 const logger = log4js.getLogger()

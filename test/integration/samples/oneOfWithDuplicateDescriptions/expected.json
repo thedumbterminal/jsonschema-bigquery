@@ -2,27 +2,27 @@
   "schema": {
     "fields": [
       {
-       "fields": [
-         {
-           "mode": "NULLABLE",
-           "name": "first_name",
-           "type": "STRING"
-         },
-         {
-           "description": "Created date",
-           "mode": "NULLABLE",
-           "name": "created",
-           "type": "STRING"
-         },
-         {
-           "mode": "NULLABLE",
-           "name": "last_name",
-           "type": "STRING"
-         }
-       ],
-       "mode": "NULLABLE",
-       "name": "name",
-       "type": "RECORD"
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "first_name",
+            "type": "STRING"
+          },
+          {
+            "description": "Created date",
+            "mode": "NULLABLE",
+            "name": "created",
+            "type": "STRING"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "last_name",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE",
+        "name": "name",
+        "type": "RECORD"
       }
     ]
   }
