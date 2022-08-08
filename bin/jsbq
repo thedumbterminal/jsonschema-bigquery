@@ -13,7 +13,7 @@ jsbq.process = async (project, datasetName, jsonSchema, options) => {
   logger.info('Processing JSON schema...')
   const tableOptions = converter.run(jsonSchema, options)
   logger.info('Generated BigQuery schema:')
-  console.log(utils.inspector(tableOptions))
+  console.log(JSON.stringify(tableOptions))
 
   if (!project && !datasetName) {
     return logger.info('Skipping table operations')
