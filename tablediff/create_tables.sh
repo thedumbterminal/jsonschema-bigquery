@@ -5,9 +5,9 @@
 
 for EVENT_VERSION in `cat events.list`
 do
-echo Starting $schema
-cp $SCHEMA_PATH/$EVENT_VERSION/schema.json ../src
-node ../src/jsbq.js -p $PROJECT -d $DATASET -j schema.json
+  echo Starting $schema
+  cp $SCHEMA_PATH/$EVENT_VERSION/schema.json ../src
+  bin/jsbq -p $PROJECT -d $DATASET -j schema.json
 done
 
 echo Finished
