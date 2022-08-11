@@ -1,6 +1,6 @@
 {
   "name": "jsonschema-bigquery",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Convert JSON schema to Google BigQuery schema",
   "main": "src/converter.js",
   "scripts": {

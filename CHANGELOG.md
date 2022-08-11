@@ -1,9 +1,15 @@
 # Changelog
 
+## v5.1.0 (11/08/2022)
+
+- JSBQ CLI output now compatible with Google's bq CLI.
+- Logging code reduced.
+- Updated dependencies.
+
 ## v5.0.1 (04/07/2022)
 
-- JSBQ CLI now supports draft-7+ schemas
-- Updated dependencies
+- JSBQ CLI now supports draft-7+ schemas.
+- Updated dependencies.
 
 ## v5.0.0 (30/12/2021)
 
