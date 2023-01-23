@@ -1,0 +1,12 @@
+{
+  "schema": {
+    "fields": [
+      {
+        "description": "Some json data without specific schema.",
+        "name": "semi_structured",
+        "type": "JSON",
+        "mode": "NULLABLE"
+      }
+    ]
+  }
+}

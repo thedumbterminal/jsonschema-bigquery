@@ -1,0 +1,12 @@
+{
+  "id": "http://yourdomain.com/schemas/myschema.json",
+  "description": "Example description",
+  "type": "object",
+  "properties": {
+    "semi_structured": {
+      "description": "Some json data without specific schema.",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}
