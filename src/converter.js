@@ -183,9 +183,8 @@ converter._object = (name, node, mode) => {
       // Big Query can handle semi-structured data :
       // https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_semi-structured_json_data
       fieldType = 'JSON'
-    }
-
-    if (hasProperties && Object.keys(node.properties).length === 0) {
+      return converter._scalar(name, fieldType, mode, node.description)
+    } else if (Object.keys(node.properties).length === 0) {
       throw new SchemaError(
         'Record fields must have one or more child fields',
         node
@@ -194,23 +193,21 @@ converter._object = (name, node, mode) => {
 
     result = converter._scalar(name, fieldType, mode, node.description)
 
-    if (hasProperties) {
-      const required_properties = node.required || []
-      const properties = node.properties
+    const required_properties = node.required || []
+    const properties = node.properties
 
-      let fields = Object.keys(properties).map((key) => {
-        const required = required_properties.includes(key)
-          ? 'REQUIRED'
-          : 'NULLABLE'
-        return converter._visit(key, properties[key], required)
-      })
+    let fields = Object.keys(properties).map((key) => {
+      const required = required_properties.includes(key)
+        ? 'REQUIRED'
+        : 'NULLABLE'
+      return converter._visit(key, properties[key], required)
+    })
 
-      // remove empty fields
-      fields = fields.filter(function (field) {
-        return field != null
-      })
-      result.fields = fields
-    }
+    // remove empty fields
+    fields = fields.filter(function (field) {
+      return field != null
+    })
+    result.fields = fields
   } catch (e) {
     if (!converter._options.continueOnError) {
       throw e
