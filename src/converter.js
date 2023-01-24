@@ -166,8 +166,9 @@ converter._array = (name, node) => {
 }
 
 converter._object = (name, node, mode) => {
-  let result
-  const hasProperties = _.isPlainObject(node.properties)
+  let result = {
+    fields: [],
+  }
   let fieldType = 'RECORD'
   try {
     if (
@@ -179,16 +180,14 @@ converter._object = (name, node, mode) => {
         node
       )
     }
-    if (!hasProperties) {
+    if (
+      !_.isPlainObject(node.properties) ||
+      Object.keys(node.properties).length === 0
+    ) {
       // Big Query can handle semi-structured data :
       // https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_semi-structured_json_data
       fieldType = 'JSON'
       return converter._scalar(name, fieldType, mode, node.description)
-    } else if (Object.keys(node.properties).length === 0) {
-      throw new SchemaError(
-        'Record fields must have one or more child fields',
-        node
-      )
     }
 
     result = converter._scalar(name, fieldType, mode, node.description)

@@ -117,6 +117,29 @@ describe('converter unit', () => {
       })
     })
 
+    context(
+      'with the "preventAdditionalObjectProperties" and "continueOnError" options',
+      () => {
+        let result
+
+        beforeEach(() => {
+          converter._options = {
+            preventAdditionalObjectProperties: true,
+            continueOnError: true,
+          }
+          const node = {
+            properties: {},
+          }
+          result = converter._object('test', node, 'NULLABLE')
+        })
+
+        it('skips the field', () => {
+          const expected = { fields: [] }
+          assert.deepStrictEqual(result, expected)
+        })
+      }
+    )
+
     context('with no properties', () => {
       it('converts to JSON when properties not defined', () => {
         const expected = {
@@ -127,48 +150,6 @@ describe('converter unit', () => {
         const result = converter._object('test', {}, 'NULLABLE')
 
         assert.deepStrictEqual(result, expected)
-      })
-    })
-
-    context('with zero properties', () => {
-      it('does not allow objects to have zero properties defined', () => {
-        const node = {
-          properties: {},
-        }
-        assert.throws(() => {
-          converter._object('test', node, 'NULLABLE')
-        }, /Record fields must have one or more child fields/)
-      })
-    })
-
-    context('with no properties continueOnError', () => {
-      beforeEach(() => {
-        converter._options = {
-          continueOnError: true,
-        }
-      })
-
-      it('does not allow objects to not have properties defined', () => {
-        assert.doesNotThrow(() => {
-          converter._object('test', {}, 'NULLABLE')
-        }, /No properties defined for object/)
-      })
-    })
-
-    context('with zero properties continueOnError', () => {
-      beforeEach(() => {
-        converter._options = {
-          continueOnError: true,
-        }
-      })
-
-      it('does not allow objects to have zero properties defined', () => {
-        const node = {
-          properties: {},
-        }
-        assert.doesNotThrow(() => {
-          converter._object('test', node, 'NULLABLE')
-        }, /Record fields must have one or more child fields/)
       })
     })
   })

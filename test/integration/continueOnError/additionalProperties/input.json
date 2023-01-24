@@ -1,0 +1,21 @@
+{
+  "id": "http://yourdomain.com/schemas/myschema.json",
+  "description": "Complex example empty Object",
+  "type": "object",
+  "properties": {
+    "address": {
+      "type": "object",
+      "properties": {
+        "street_address": {
+          "type": "string"
+        },
+        "country": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

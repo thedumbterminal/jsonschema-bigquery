@@ -10,6 +10,11 @@
             "name": "street_address",
             "type": "STRING",
             "mode": "NULLABLE"
+          },
+          {
+            "name": "country",
+            "type": "JSON",
+            "mode": "NULLABLE"
           }
         ]
       }

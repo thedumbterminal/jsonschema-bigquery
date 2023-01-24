@@ -1,5 +1,10 @@
 # Changelog
 
+## v6.0.0 (24/01/2023)
+
+- Objects with no properties convert to JSON fields.
+- Updated dependencies.
+
 ## v5.1.0 (11/08/2022)
 
 - JSBQ CLI output now compatible with Google's bq CLI.
