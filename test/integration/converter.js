@@ -54,6 +54,33 @@ describe('converter integration', () => {
     })
   })
 
+  describe('preventAdditionalObjectProperties option', () => {
+    const sampleDir = './test/integration/preventAdditionalObjectProperties'
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    const testDirs = fs.readdirSync(sampleDir)
+
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    testDirs.forEach((dir) => {
+      describe(dir, () => {
+        let expected
+        let result
+
+        before(() => {
+          const inJson = require(`../../${sampleDir}/${dir}/input.json`)
+          expected = require(`../../${sampleDir}/${dir}/expected.json`)
+          const options = {
+            preventAdditionalObjectProperties: true,
+          }
+          result = converter.run(inJson, options, 'p', 't')
+        })
+
+        it('converts to big query', () => {
+          assert.deepStrictEqual(result, expected)
+        })
+      })
+    })
+  })
+
   describe('continueOnError and preventAdditionalObjectProperties options', () => {
     const sampleDir =
       './test/integration/continueOnErrorAndPreventAdditionalObjectProperties'

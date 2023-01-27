@@ -1,5 +1,9 @@
 # Changelog
 
+## v6.1.0 (27/01/2023)
+
+- unevaluatedProperties now supported when checking for additional properties.
+
 ## v6.0.0 (24/01/2023)
 
 - Objects with no properties convert to JSON fields.

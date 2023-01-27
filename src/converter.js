@@ -17,6 +17,9 @@ const OFS = ['allOf', 'anyOf', 'oneOf']
 
 const BIGQUERY_FIELD_NAME_REGEXP = /^[a-z_]([a-z0-9_]+|)$/i
 
+converter._copy = (o) => _.clone(o, false)
+converter._deepCopy = (o) => _.clone(o, true)
+
 converter._merge_property = (
   merge_type,
   property_name,
@@ -24,7 +27,6 @@ converter._merge_property = (
   source_value
 ) => {
   // Merges two properties.
-  let destination_list
   if (destination_value === undefined && source_value === undefined) {
     return undefined
   }
@@ -39,6 +41,7 @@ converter._merge_property = (
   if (_.isPlainObject(destination_value) && _.isPlainObject(source_value)) {
     return converter._merge_dicts(merge_type, destination_value, source_value)
   }
+  let destination_list
   if (Array.isArray(destination_value)) {
     destination_list = converter._copy(destination_value)
   } else {
@@ -66,10 +69,6 @@ converter._merge_property = (
   )
   return destination_list
 }
-
-converter._copy = (o) => _.clone(o, false)
-
-converter._deepCopy = (o) => _.clone(o, true)
 
 /**
  * Merges multiple sources given as an Array was *dicts,
@@ -165,6 +164,9 @@ converter._array = (name, node) => {
   return converter._visit(name, items_with_description, 'REPEATED')
 }
 
+converter._allowsAdditionalProperties = (node) =>
+  node.additionalProperties !== false && node.unevaluatedProperties !== false
+
 converter._object = (name, node, mode) => {
   let result = {
     fields: [],
@@ -172,11 +174,11 @@ converter._object = (name, node, mode) => {
   let fieldType = 'RECORD'
   try {
     if (
-      node.additionalProperties !== false &&
+      converter._allowsAdditionalProperties(node) &&
       converter._options.preventAdditionalObjectProperties
     ) {
       throw new SchemaError(
-        '"object" type properties must have an \'"additionalProperties": false\' property',
+        'Objects must not have additional or unevaluated properties',
         node
       )
     }
