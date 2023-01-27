@@ -96,11 +96,11 @@ describe('converter unit', () => {
         }
         assert.doesNotThrow(() => {
           converter._object('test', node, 'NULLABLE')
-        }, /"object" type properties must have an '"additionalProperties": false' property/)
+        }, /Objects must not have additional or unevaluated properties/)
       })
     })
 
-    context('with the "ignoreAdditional" option', () => {
+    context('with the "preventAdditionalObjectProperties" option', () => {
       beforeEach(() => {
         converter._options = {
           preventAdditionalObjectProperties: true,
@@ -113,7 +113,7 @@ describe('converter unit', () => {
         }
         assert.throws(() => {
           converter._object('test', node, 'NULLABLE')
-        }, /"object" type properties must have an '"additionalProperties": false' property/)
+        }, /Objects must not have additional or unevaluated properties/)
       })
     })
 
