@@ -1,5 +1,9 @@
 .npmignore
 .nvmrc
 .settings
-.travis.yml
 .project
+.nyc_output
+.editorconfig
+.prettierignore
+.prettierrc.json
+.eslintrc.json
