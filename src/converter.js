@@ -7,7 +7,7 @@ const JSON_SCHEMA_TO_BIGQUERY_TYPE_DICT = {
   boolean: 'BOOLEAN',
   'date-time': 'TIMESTAMP',
   integer: 'INTEGER',
-  number: 'NUMERIC',
+  number: 'BIGNUMERIC',
   string: 'STRING',
   date: 'DATE',
   time: 'TIME',

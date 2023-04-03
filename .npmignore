@@ -7,3 +7,5 @@
 .prettierignore
 .prettierrc.json
 .eslintrc.json
+coverage
+.github
