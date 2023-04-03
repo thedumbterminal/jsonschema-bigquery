@@ -2,7 +2,8 @@
 
 ## v7.0.0 (03/04/2023)
 
-- - Updated converter to generate big numeric instead of numeric for number type.
+- Updated converter to generate big numeric instead of numeric for number type.
+- Updated dependencies.
 
 ## v6.1.0 (27/01/2023)
 
