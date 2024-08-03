@@ -4,7 +4,7 @@
     "es2022": true,
     "mocha": true
   },
-  "extends": ["eslint:recommended", "plugin:mocha/recommended", "standard"],
+  "extends": ["eslint:recommended", "plugin:mocha/recommended"],
   "parserOptions": {
     "ecmaVersion": "latest"
   },

@@ -7,7 +7,9 @@
     "ci": "npm run lint && npm run coverage",
     "test": "mocha test/unit test/integration",
     "coverage": "nyc npm run test",
-    "lint": "eslint .",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier -c .",
+    "lint": "npm run lint:prettier && npm run lint:eslint",
     "format": "prettier --write ."
   },
   "bin": {
@@ -39,14 +41,13 @@
   "homepage": "https://github.com/thedumbterminal/jsonschema-bigquery#readme",
   "devDependencies": {
     "eslint": "^8.5.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-mocha": "^10.1.0",
-    "eslint-plugin-n": "^16.0.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "mocha": "^10.0.0",
+    "eslint-plugin-n": "^17.10.1",
+    "eslint-plugin-promise": "^7.0.0",
+    "mocha": "^10.7.0",
     "nyc": "^17.0.0",
-    "prettier": "^3.0.0"
+    "prettier": "^3.3.3"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.0.0",

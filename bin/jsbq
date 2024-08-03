@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const jsbq = module.exports = {}
+const jsbq = (module.exports = {})
 
 const gbq = require('../src/gbq')
 const { get_table_id } = require('../src/utils')
@@ -28,8 +28,8 @@ jsbq.process = async (project, datasetName, jsonSchema, options) => {
   tableOptions.friendly_name = jsonSchema.title
   tableOptions.description = jsonSchema.description || jsonSchema.title
   tableOptions.timePartitioning = {
-    'type': 'DAY',
-    'requirePartitionFilter': true
+    type: 'DAY',
+    requirePartitionFilter: true,
   }
 
   logger.info('Checking if table exists...')
@@ -48,35 +48,37 @@ jsbq.run = async () => {
   const readFile = promisify(fs.readFile)
 
   const argv = require('yargs')
-  .usage('Usage: $0 -p [project] -d [dataset] -j <json schema file> --preventAdditionalObjectProperties --continueOnError')
-  .options({
-    j: {
-      describe: 'JSON schema file',
-      demandOption: true
-    },
-    p: {
-      describe: 'GCP project name'
-    },
-    d: {
-      describe: 'BigQuery dataset name'
-    },
-    preventAdditionalObjectProperties: {
-      describe: 'boolean, check for additional object properties in schemas.',
-      type: 'boolean',
-      default: false
-    },
-    continueOnError: {
-      describe: 'boolean, if error in json schema, skip element in big query schema and continue.',
-      type: 'boolean',
-      default: false
-    },
-    debug: {
-      describe: 'Enable debug logging',
-      type: 'boolean',
-      default: false
-    }
-  })
-  .argv
+    .usage(
+      'Usage: $0 -p [project] -d [dataset] -j <json schema file> --preventAdditionalObjectProperties --continueOnError',
+    )
+    .options({
+      j: {
+        describe: 'JSON schema file',
+        demandOption: true,
+      },
+      p: {
+        describe: 'GCP project name',
+      },
+      d: {
+        describe: 'BigQuery dataset name',
+      },
+      preventAdditionalObjectProperties: {
+        describe: 'boolean, check for additional object properties in schemas.',
+        type: 'boolean',
+        default: false,
+      },
+      continueOnError: {
+        describe:
+          'boolean, if error in json schema, skip element in big query schema and continue.',
+        type: 'boolean',
+        default: false,
+      },
+      debug: {
+        describe: 'Enable debug logging',
+        type: 'boolean',
+        default: false,
+      },
+    }).argv
 
   if (argv.debug) {
     logger.level = 'debug'
@@ -86,14 +88,14 @@ jsbq.run = async () => {
   const schemaData = await readFile(argv.j)
   const options = {
     preventAdditionalObjectProperties: argv.preventAdditionalObjectProperties,
-    continueOnError: argv.continueOnError
+    continueOnError: argv.continueOnError,
   }
   const jsonSchema = JSON.parse(schemaData)
   logger.debug('Input schema: ', jsonSchema)
   return jsbq.process(argv.p, argv.d, jsonSchema, options)
 }
 
-jsbq.run().catch(e => {
+jsbq.run().catch((e) => {
   logger.error(e)
   process.exit(1)
 })
