@@ -24,7 +24,7 @@ converter._merge_property = (
   merge_type,
   property_name,
   destination_value,
-  source_value
+  source_value,
 ) => {
   // Merges two properties.
   if (destination_value === undefined && source_value === undefined) {
@@ -65,7 +65,7 @@ converter._merge_property = (
     return _.uniq(destination_list).length === 1 ? destination_list.shift() : ''
   }
   destination_list.push(
-    ...source_list.filter((v) => !destination_list.includes(v))
+    ...source_list.filter((v) => !destination_list.includes(v)),
   )
   return destination_list
 }
@@ -89,7 +89,7 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => {
         source_dict = converter._merge_dicts_array(
           x_of,
           source_dict,
-          source_dict[x_of]
+          source_dict[x_of],
         )
         delete source_dict[x_of]
       }
@@ -101,7 +101,7 @@ converter._merge_dicts_array = (merge_type, dest_dict, source_dicts) => {
         merge_type,
         name,
         result[name],
-        source_dict[name]
+        source_dict[name],
       )
       if (merged_property !== undefined) {
         result[name] = merged_property
@@ -129,7 +129,7 @@ converter._merge_dicts = (merge_type, dest_dict, source_dict) => {
       merge_type,
       name,
       result[name],
-      source_dict[name]
+      source_dict[name],
     )
     if (merged_property !== undefined) {
       result[name] = merged_property
@@ -179,7 +179,7 @@ converter._object = (name, node, mode) => {
     ) {
       throw new SchemaError(
         'Objects must not have additional or unevaluated properties',
-        node
+        node,
       )
     }
     if (

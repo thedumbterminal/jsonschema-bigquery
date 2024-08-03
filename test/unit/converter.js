@@ -137,7 +137,7 @@ describe('converter unit', () => {
           const expected = { fields: [] }
           assert.deepStrictEqual(result, expected)
         })
-      }
+      },
     )
 
     context('with no properties', () => {
@@ -162,7 +162,7 @@ describe('converter unit', () => {
         },
         {
           option: true,
-        }
+        },
       )
     })
 
@@ -208,7 +208,7 @@ describe('converter unit', () => {
             mode: 'NULLABLE',
             name: 'test123',
             type: 'STRING',
-          }
+          },
         )
       })
     })
