@@ -50,7 +50,7 @@
     "prettier": "^3.3.3"
   },
   "dependencies": {
-    "@google-cloud/bigquery": "^7.0.0",
+    "@google-cloud/bigquery": "^8.0.0",
     "lodash": "^4.17.20",
     "log4js": "^6.3.0",
     "yargs": "^17.3.1"
