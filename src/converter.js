@@ -158,7 +158,7 @@ converter._scalar = (name, type, mode, description) => {
 
 converter._array = (name, node) => {
   const items_with_description = converter._deepCopy(node.items)
-  if (_.has(items_with_description, 'description')) {
+  if (_.has(node, 'description')) {
     items_with_description.description = node.description
   }
   return converter._visit(name, items_with_description, 'REPEATED')

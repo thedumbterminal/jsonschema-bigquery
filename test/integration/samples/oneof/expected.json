@@ -2,6 +2,7 @@
   "schema": {
     "fields": [
       {
+        "description": "The users additional information",
         "name": "tags",
         "mode": "REPEATED",
         "type": "RECORD",

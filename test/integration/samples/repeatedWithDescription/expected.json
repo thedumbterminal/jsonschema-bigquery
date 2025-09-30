@@ -1,0 +1,12 @@
+{
+  "schema": {
+    "fields": [
+      {
+        "description": "An array of names",
+        "name": "names",
+        "type": "STRING",
+        "mode": "REPEATED"
+      }
+    ]
+  }
+}
