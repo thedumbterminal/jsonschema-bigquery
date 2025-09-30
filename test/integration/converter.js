@@ -10,6 +10,7 @@ describe('converter integration', () => {
 
     // eslint-disable-next-line mocha/no-setup-in-describe
     testDirs.forEach((dir) => {
+      // test each directory
       describe(dir, () => {
         let expected
         let result
@@ -34,6 +35,7 @@ describe('converter integration', () => {
 
     // eslint-disable-next-line mocha/no-setup-in-describe
     testDirs.forEach((dir) => {
+      // test each directory
       describe(dir, () => {
         let expected
         let result
@@ -61,6 +63,7 @@ describe('converter integration', () => {
 
     // eslint-disable-next-line mocha/no-setup-in-describe
     testDirs.forEach((dir) => {
+      // test each directory
       describe(dir, () => {
         let expected
         let result
@@ -89,6 +92,7 @@ describe('converter integration', () => {
 
     // eslint-disable-next-line mocha/no-setup-in-describe
     testDirs.forEach((dir) => {
+      // test each directory
       describe(dir, () => {
         let expected
         let result
