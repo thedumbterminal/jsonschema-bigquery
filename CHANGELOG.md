@@ -1,5 +1,10 @@
 # Changelog
 
+## v7.0.2 (05/10/2025)
+
+- Improved argument parsing for CLI.
+- Updated dependencies.
+
 ## v7.0.1 (30/09/2025)
 
 - Fixed bug where descriptions were not set for repeated columns.

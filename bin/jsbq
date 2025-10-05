@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
-const jsbq = (module.exports = {})
-
 const gbq = require('../src/gbq')
 const { get_table_id } = require('../src/utils')
 const converter = require('../src/converter')
 const { logger } = require('../src/log')
 const fs = require('fs')
 const { promisify } = require('util')
+const yargs = require('yargs')
+const hideBin = require('yargs/helpers').hideBin
+
+const jsbq = (module.exports = {})
 
 jsbq.process = async (project, datasetName, jsonSchema, options) => {
   logger.info('Processing JSON schema...')
@@ -47,20 +49,28 @@ jsbq.process = async (project, datasetName, jsonSchema, options) => {
 jsbq.run = async () => {
   const readFile = promisify(fs.readFile)
 
-  const argv = require('yargs')
+  const argv = yargs(hideBin(process.argv))
     .usage(
       'Usage: $0 -p [project] -d [dataset] -j <json schema file> --preventAdditionalObjectProperties --continueOnError',
     )
+    .version(false)
+    .help(false)
     .options({
       j: {
         describe: 'JSON schema file',
         demandOption: true,
+        type: 'string',
+        requiresArg: true,
       },
       p: {
         describe: 'GCP project name',
+        type: 'string',
+        requiresArg: true,
       },
       d: {
         describe: 'BigQuery dataset name',
+        type: 'string',
+        requiresArg: true,
       },
       preventAdditionalObjectProperties: {
         describe: 'boolean, check for additional object properties in schemas.',
@@ -78,7 +88,8 @@ jsbq.run = async () => {
         type: 'boolean',
         default: false,
       },
-    }).argv
+    })
+    .parse()
 
   if (argv.debug) {
     logger.level = 'debug'
