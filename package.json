@@ -1,11 +1,11 @@
 {
   "name": "jsonschema-bigquery",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "Convert JSON schema to Google BigQuery schema",
   "main": "src/converter.js",
   "scripts": {
     "ci": "npm run lint && npm run coverage",
-    "test": "mocha test/unit test/integration",
+    "test": "mocha test/unit test/integration test/system",
     "coverage": "nyc npm run test",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier -c .",
@@ -47,7 +47,8 @@
     "eslint-plugin-promise": "^7.0.0",
     "mocha": "^11.0.1",
     "nyc": "^17.0.0",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "sinon": "^21.0.0"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^8.0.0",
