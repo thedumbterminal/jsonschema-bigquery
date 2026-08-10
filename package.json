@@ -51,7 +51,7 @@
     "sinon": "^22.0.0"
   },
   "dependencies": {
-    "@google-cloud/bigquery": "^8.0.0",
+    "@google-cloud/bigquery": "^9.0.1",
     "lodash": "^4.17.20",
     "log4js": "^6.3.0",
     "yargs": "^18.0.0"
